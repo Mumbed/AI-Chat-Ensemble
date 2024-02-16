@@ -10,38 +10,39 @@
     </head>
     <body>
         <h1>Login</h1>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br>
-        <button id="button_login" type="button">
-            로그인</button>
+        <form id="loginForm">
+            {% csrf_token %}
 
-        <div>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <button type="submit">Login</button>
+        </form>
             계정이 없으신가요?
             <a href="{% url 'join' %}">가입하기</a>
         </div>
 
         <script>
-            $('#button_login').on('click', () => {
+            $('#loginForm').submit(function (event) {
+                event.preventDefault();
                 let email = $('#email').val();
                 let password = $('#password').val();
-
+    
                 $.ajax({
-                    url: "/login",
+                    url: "{% url 'login' %}",
+                    method: "POST",
                     data: {
                         email: email,
-                        password: password
+                        password: password,
+                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val() // Include the CSRF token
                     },
-                    method: "POST",
-                    dataType: "json",
                     success: function (data) {
-                        location.replace('{% url 'chat' %}');
-                    },
-                    error: function (request, status, error) {
-                        let data = JSON.parse(request.responseText);
-                        console.log(data.message);
                         alert(data.message);
+                        location.href = '{% url 'main' %}';
+                    },
+                    error: function (xhr, status, error) {
+                        alert(xhr.responseJSON.message);
                     }
                 });
             });

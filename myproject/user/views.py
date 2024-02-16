@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.views import APIView
 from .models import CustomUser
 from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth import authenticate, login
+
 from rest_framework.response import Response
 from uuid import uuid4
 import os
@@ -28,7 +30,9 @@ class Login(APIView):
 
         request.session['loginCheck'] = True
         request.session['email'] = user.email
-
+        if user is not None:
+            login(request,user=user)
+            return redirect('/chat')
         return Response(status=200, data=dict(message='로그인 성공'))
 
 

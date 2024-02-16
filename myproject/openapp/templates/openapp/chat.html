@@ -74,6 +74,11 @@
     <body>
         <div class="container">
             <h1>물어보세요</h1>
+            <div>
+            {% if user.is_authenticated %}
+            {{ user.email}}
+            {% endif %}
+            </div>
             <div
                 style="display: flex; flex-direction: row; text-align: center; justify-content: center; padding-top:60px; background-color: #FAFAFA">
                 <div style="width: 500px; min-width: 500px;">
