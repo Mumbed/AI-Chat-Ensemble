@@ -1,8 +1,10 @@
 from django.shortcuts import redirect, render
+from django.views import View
 from rest_framework.views import APIView
 from .models import CustomUser
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout as auth_logout
 
 from rest_framework.response import Response
 from uuid import uuid4
@@ -52,3 +54,11 @@ class Join(APIView):
                             name=name)
 
         return Response(status=200, data=dict(message="회원가입 성공했습니다. 로그인 해주세요."))
+
+class UserLogout(View):
+    def get(self, request):
+        auth_logout(request)
+        return redirect('/login')
+    def post(self, request):
+        auth_logout(request)
+        return redirect('/login')

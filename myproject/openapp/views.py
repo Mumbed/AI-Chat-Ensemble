@@ -22,11 +22,11 @@ def chat_view(request):
                 messages=[{"role": "user", "content": question}]
             )
             response = completion.choices[0].message.content
-            Chat.objects.create(question=question, response=response, source='gpt')
+            Chat.objects.create(user=user, question=question, response=response, source='gpt')
         elif source == 'gemini':
             response = model.generate_content(question)
             if response.parts:
-                Chat.objects.create(question=question, response=response.parts[0].text, source='gemini')
+                Chat.objects.create(user=user,question=question, response=response.parts[0].text, source='gemini')
     
     gpt_chats = Chat.objects.filter(source='gpt', user=request.user)
     gemini_chats = Chat.objects.filter(source='gemini', user=request.user)
