@@ -83,7 +83,9 @@
                     </form>
                 {% endif %}
             </div>
-
+            <div>
+                새로운 채팅
+            </div>
             <div
                 style="display: flex; flex-direction: row; text-align: center; justify-content: center; padding-top:60px; background-color: #FAFAFA">
                 <div style="width: 500px; min-width: 500px;">
@@ -97,7 +99,7 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <form method="post" action="{% url 'chat' %}">
+                    <form method="post" action="{% url 'create_chat' %}">
                         {% csrf_token %}
                         <input type="hidden" name="source" value="gpt">
                         <input type="text" name="question">
@@ -115,7 +117,8 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <form method="post" action="{% url 'chat' %}">
+                    <form method="post" action="{% url 'chat' chat_id=chat_id %}">
+
                         {% csrf_token %}
                         <input type="hidden" name="source" value="gemini">
                         <input type="text" name="question">

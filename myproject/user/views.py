@@ -34,7 +34,7 @@ class Login(APIView):
         request.session['email'] = user.email
         if user is not None:
             login(request,user=user)
-            return redirect('/chat')
+            return redirect('/main')
         return Response(status=200, data=dict(message='로그인 성공'))
 
 

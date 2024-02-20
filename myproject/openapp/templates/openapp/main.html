@@ -19,14 +19,18 @@
     <h2>Chats</h2>
     <ul>
         {% for chat in chats %}
-            <li>Question: {{ chat.question }}</li>
-            <li>Response: {{ chat.response }}</li>
-            <li>Source: {{ chat.source }}</li>
-            <hr>
+        {% if user.email == chat.user.email %}
+        <li>Question: {{ chat.question }}</li>
+        <li>Response: {{ chat.response }}</li>
+        <li>Source: {{ chat.source }}</li>
+        <hr>
+    {% endif %}
         {% endfor %}
     </ul>
     <div>
-        채팅으로 이동? <a href="{% url 'chat' %}" >채팅</a>
+        <div>
+            <a href="{% url 'create_chat' %}">새로운 채팅방 생성</a>
+        </div>
     </div>
 </body>
 </html>
