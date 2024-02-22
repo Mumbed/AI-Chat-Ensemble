@@ -6,7 +6,7 @@ from uuid import uuid4
 from openai import OpenAI
 import google.generativeai as genai
 from django.contrib.auth.decorators import login_required
-
+# add
 GOOGLE_API_KEY = "AIzaSyC7ipeMCe1gBUGTy-Q0AxLIyrL-A4-Ma-Q"
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
