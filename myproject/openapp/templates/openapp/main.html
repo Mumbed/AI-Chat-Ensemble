@@ -10,6 +10,13 @@
     <h1>Welcome to the Main Page</h1>
 
     <h2>Users</h2>
+    {% if user.is_authenticated %}
+    {{ user.email}}
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token%}
+        <input type="submit" value="Logout">
+    </form>
+{% endif %}
     <ul>
         {% for user in users %}
             <li>{{ user.name }} - {{ user.email }}</li>
