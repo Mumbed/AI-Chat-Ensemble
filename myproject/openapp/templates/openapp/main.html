@@ -19,12 +19,14 @@
     <h2>Chats</h2>
     <ul>
         {% for chat in chats %}
-        {% if user.email == chat.user.email %}
-        <li>Question: {{ chat.question }}</li>
-        <li>Response: {{ chat.response }}</li>
-        <li>Source: {{ chat.source }}</li>
-        <hr>
-    {% endif %}
+            {% if user.email == chat.user.email %}
+                <li>
+                    Question: <a href="{% url 'chat' chat_room_id=chat.chat_room_id %}">{{ chat.question }}</a>
+                </li>
+                <li>Response: {{ chat.response }}</li>
+                <li>Source: {{ chat.source }}</li>
+                <hr>
+            {% endif %}
         {% endfor %}
     </ul>
     <div>

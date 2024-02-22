@@ -10,13 +10,7 @@ from django.contrib.auth.decorators import login_required
 GOOGLE_API_KEY = "AIzaSyC7ipeMCe1gBUGTy-Q0AxLIyrL-A4-Ma-Q"
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-pro')
-def chat_view(request, chat_id):
-    try:
-        chat = Chat.objects.get(chat_id=chat_id)
-
-    except Chat.DoesNotExist:
-        chat = None
-
+def chat_view(request, chat_room_id):
     if request.method == 'POST':
         question = request.POST.get('question')
         source = request.POST.get('source')
@@ -28,15 +22,15 @@ def chat_view(request, chat_id):
                 messages=[{"role": "user", "content": question}]
             )
             response = completion.choices[0].message.content
-            Chat.objects.create(user=user, question=question, response=response, source='gpt')
+            Chat.objects.create(user=user, question=question, response=response, source='gpt', chat_room_id=chat_room_id)
         elif source == 'gemini':
             response = model.generate_content(question)
             if response.parts:
-                Chat.objects.create(user=user,question=question, response=response.parts[0].text, source='gemini')
+                Chat.objects.create(user=user, question=question, response=response.parts[0].text, source='gemini', chat_room_id=chat_room_id)
     
-    gpt_chats = Chat.objects.filter(source='gpt', user=request.user)
-    gemini_chats = Chat.objects.filter(source='gemini', user=request.user)
-    return render(request, 'openapp/chat.html', {'gpt_chats': gpt_chats, 'gemini_chats': gemini_chats, 'chat': chat, 'chat_id': chat_id})
+    gpt_chats = Chat.objects.filter(source='gpt', user=request.user, chat_room_id=chat_room_id)
+    gemini_chats = Chat.objects.filter(source='gemini', user=request.user, chat_room_id=chat_room_id)
+    return render(request, 'openapp/chat.html', {'gpt_chats': gpt_chats, 'gemini_chats': gemini_chats, 'chat_room_id':chat_room_id })
 
 def main_view(request):
     chats = Chat.objects.all()
@@ -44,8 +38,10 @@ def main_view(request):
     return render(request, 'openapp/main.html', {'chats': chats, 'users': users})
 
 def create_chat(request):
-    new_chat_id = uuid4()
-    user_id = request.user.id if request.user.is_authenticated else None
+    new_chat_room_id = uuid4().hex  # Generate a new UUID for the chat room ID
 
-    Chat.objects.create(chat_id=new_chat_id, user_id=user_id)
-    return redirect('chat', chat_id=new_chat_id)
+    user_id = request.user.id if request.user.is_authenticated else None
+    Chat.objects.create(chat_room_id=new_chat_room_id, user_id=user_id)
+
+    return redirect('chat', chat_room_id=new_chat_room_id)
+

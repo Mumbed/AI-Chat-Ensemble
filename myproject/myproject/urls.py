@@ -7,7 +7,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('chat/<uuid:chat_id>/', chat_view, name='chat'),
+    path('chat/<str:chat_room_id>/', chat_view, name='chat'),  # Changed int to str for UUID
     path('main/', main_view, name='main'),
     path('create_chat/', create_chat, name='create_chat'),
 
