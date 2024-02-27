@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join</title>
+    <title>Main</title>
+    <style>
+        .chat-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .chat {
+            width: 33.33%; 
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Main Page</h1>
+    <h1>메인 페이지</h1>
 
     <h2>Users</h2>
     {% if user.is_authenticated %}
-    {{ user.email}}
+    안녕하세요 {{ user.name}} 님 , 환영합니다! 
     <form action="{% url 'logout' %}" method="POST">
         {% csrf_token%}
         <input type="submit" value="Logout">
@@ -24,19 +33,19 @@
     </ul>
 
     <h2>Chats</h2>
-    <ul>
+    <div class="chat-group">
         {% for chat in chats %}
             {% if user.email == chat.user.email %}
-                <li>
-                    Question: <a href="{% url 'chat' chat_room_id=chat.chat_room_id %}">{{ chat.question }}</a>
-                </li>
-                <li>Response: {{ chat.response }}</li>
-                <li>Source: {{ chat.source }}</li>
-                <hr>
+                <div class="chat">
+                    <p>Question: <a href="{% url 'chat' chat_room_id=chat.chat_room_id %}">{{ chat.question }}</a></p>
+                    <!-- <p>Response: {{ chat.response }}</p> -->
+                    <p>Source: {{ chat.source }}</p>
+                </div>
             {% endif %}
         {% endfor %}
-    </ul>
+    </div>
     <div>
+        <h2>새로운 채팅방</h2>
         <div>
             <a href="{% url 'create_chat' %}">새로운 채팅방 생성</a>
         </div>
