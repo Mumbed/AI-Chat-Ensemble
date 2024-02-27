@@ -84,7 +84,10 @@
                 {% endif %}
             </div>
             <div>
-                새로운 채팅
+                <a href="{% url 'create_chat' %}">새로운 채팅방 생성</a>
+            </div>
+            <div>
+                <a href="{% url 'main' %}">메인 페이지로 이동</a>
             </div>
             <div
                 style="display: flex; flex-direction: row; text-align: center; justify-content: center; padding-top:60px; background-color: #FAFAFA">
