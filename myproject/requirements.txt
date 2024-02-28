@@ -1,0 +1,43 @@
+annotated-types @ file:///home/conda/feedstock_root/build_artifacts/annotated-types_1696634205638/work
+anyio @ file:///home/conda/feedstock_root/build_artifacts/anyio_1702909220329/work
+asgiref==3.7.2
+cachetools==5.3.2
+certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_1707022139797/work/certifi
+charset-normalizer==3.3.2
+clovax==0.1.1
+colorama @ file:///home/conda/feedstock_root/build_artifacts/colorama_1666700638685/work
+distro @ file:///home/conda/feedstock_root/build_artifacts/distro_1704321475663/work
+Django==5.0.2
+djangorestframework==3.14.0
+exceptiongroup @ file:///home/conda/feedstock_root/build_artifacts/exceptiongroup_1704921103267/work
+google-ai-generativelanguage==0.4.0
+google-api-core==2.17.0
+google-auth==2.27.0
+google-generativeai==0.3.2
+googleapis-common-protos==1.62.0
+grpcio==1.60.1
+grpcio-status==1.60.1
+h11 @ file:///home/conda/feedstock_root/build_artifacts/h11_1664132893548/work
+h2 @ file:///home/conda/feedstock_root/build_artifacts/h2_1634280454336/work
+hpack==4.0.0
+httpcore @ file:///home/conda/feedstock_root/build_artifacts/httpcore_1699629103338/work
+httpx @ file:///home/conda/feedstock_root/build_artifacts/httpx_1703084696194/work
+hyperframe @ file:///home/conda/feedstock_root/build_artifacts/hyperframe_1619110129307/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1701026962277/work
+openai @ file:///home/conda/feedstock_root/build_artifacts/openai_1707080164971/work
+proto-plus==1.23.0
+protobuf==4.25.2
+pyasn1==0.5.1
+pyasn1-modules==0.3.0
+pydantic @ file:///home/conda/feedstock_root/build_artifacts/pydantic_1707149332375/work
+pydantic_core @ file:///Users/runner/miniforge3/conda-bld/pydantic-core_1707301976085/work
+pytz==2024.1
+requests==2.31.0
+rsa==4.9
+setuptools==69.0.3
+sniffio @ file:///home/conda/feedstock_root/build_artifacts/sniffio_1662051266223/work
+sqlparse==0.4.4
+tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1691671248568/work
+typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1702176139754/work
+urllib3==2.2.0
+wheel==0.42.0
