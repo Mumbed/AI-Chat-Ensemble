@@ -44,6 +44,10 @@ a {
   text-decoration: none;
 }
 
+.current {
+  color: cyan;
+}
+
 @media screen and (min-width: 1080px) {
   header {
     padding: 0 40% 0 10%;
