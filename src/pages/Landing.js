@@ -1,5 +1,5 @@
 /**
- * 가장 초기에 보여지게 될 사이트 메인 페이지.
+ * 현재 사용자가 로그인 중인지 아닌지를 판단하는 페이지.
  */
 
 // 사이트 상태 관리와 관련된 의존성.
@@ -18,5 +18,5 @@ export default function Landing() {
     if (currentUser && LoginManager.login(currentUser) == 0) changeLoginState(true);
   }, [])
 
-  return logined ? <Navigate to={`/main`} /> : <LoginButton id="hello@gmail.com" password="a12345" action={changeLoginState}></LoginButton>
+  return logined ? <Navigate to="/main" /> : <Navigate to="/login" />
 }

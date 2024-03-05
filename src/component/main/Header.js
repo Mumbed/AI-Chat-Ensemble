@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header>
       <Logo></Logo>
-      <PageRouter currentPage={location.pathname}></PageRouter>
+      {location.pathname != "/login" ? <PageRouter currentPage={location.pathname}></PageRouter> : <></>}
     </header>
   )
 }
