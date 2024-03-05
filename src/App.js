@@ -5,9 +5,11 @@
 // 경로 자동 라우팅에 관련된 의존성
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+// 상단 헤더와 관련된 의존성
+import Header from "./component/main/Header";
+
 // 각 페이지와 관련된 의존성
 import Landing from "./pages/Landing";
-import Header from "./component/main/Header";
 import Login from "./pages/Login";
 
 export default function App() {
