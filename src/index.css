@@ -1,0 +1,42 @@
+/**
+ * 기본적인 사이트 스타일.
+ */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  overflow: hidden;
+  background-color: rgba(0,0,0,0.95);
+  color: white;
+}
+
+header {
+  display: flex;
+  height: 60px;
+  padding: 0 50% 0 10%;
+}
+
+header > a {
+  width: 150px;
+  text-align: left;
+  background: url("../public/logo.png") left center/30% no-repeat;
+  padding-left: 55px;
+  font-size: 24px;
+}
+header > div {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+a {
+  display: flex;
+  color: white;
+  height: 100%;
+  align-items: center;
+  text-decoration: none;
+}
