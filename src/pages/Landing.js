@@ -18,11 +18,5 @@ export default function Landing() {
     if (currentUser && LoginManager.login(currentUser) == 0) changeLoginState(true);
   }, [])
 
-  if (logined) {
-    return (
-      <div></div>
-    )
-  } else {
-    return <LoginButton id="hello@gmail.com" password="a12345" action={changeLoginState}></LoginButton>
-  }
+  return logined ? <Navigate to={`/main`} /> : <LoginButton id="hello@gmail.com" password="a12345" action={changeLoginState}></LoginButton>
 }
