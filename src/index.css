@@ -21,10 +21,13 @@ header {
 }
 
 header > a {
-  width: 150px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 100px;
   text-align: left;
-  background: url("../public/logo.png") left center/30% no-repeat;
-  padding-left: 55px;
+  background: url("../public/logo.png") left center no-repeat;
+  background-size: 50px 50px;
+  padding-left: 50px;
   font-size: 24px;
 }
 header > div {
@@ -39,4 +42,13 @@ a {
   height: 100%;
   align-items: center;
   text-decoration: none;
+}
+
+@media screen and (min-width: 1080px) {
+  header {
+    padding: 0 40% 0 10%;
+  }
+  header > a {
+    width: 150px;
+  }
 }
