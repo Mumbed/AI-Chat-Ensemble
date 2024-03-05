@@ -2,9 +2,6 @@
  * 가장 초기에 보여지게 될 사이트 메인 페이지.
  */
 
-//헤더 바, 사이드 바 등을 포함한 메인 레이아웃.
-import MainLayout from "../component/main/MainLayout"
-
 // 사이트 상태 관리와 관련된 의존성.
 import { useEffect, useState } from "react";
 import LoginManager from "../util/LoginManager";
@@ -23,8 +20,7 @@ export default function Landing() {
 
   if (logined) {
     return (
-      <MainLayout page="질문하기">
-      </MainLayout>
+      <div></div>
     )
   } else {
     return <LoginButton id="hello@gmail.com" password="a12345" action={changeLoginState}></LoginButton>
