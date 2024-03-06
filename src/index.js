@@ -16,6 +16,10 @@ import App from "./App";
 // 기본적인 컨테이너 생성
 const container = document.createElement("div");
 
+//로그인 정보 동기화
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if (currentUser) LoginManager.login(currentUser);
+
 // 컨테이너 랜더링
 createRoot(container).render(
   <React.StrictMode>
