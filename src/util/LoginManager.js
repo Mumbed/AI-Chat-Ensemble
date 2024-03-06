@@ -29,8 +29,8 @@ export default class LoginManager {
     }
 
     /**
-     * @type {(id: string, dataset: string) => number}
-     * @description 로그인 성공 여부에 따라 0은 성공, 1은 비번 불일치, 2는 아이디 존재 안함.
+     * @type {(id: string, dataset: string) => Boolean}
+     * @description 로그인 성공 여부에 따라 1은 성공, 0은 실패.
      */
     static login({id, password}) {
         for (let data of sample.list) {
@@ -38,11 +38,11 @@ export default class LoginManager {
                 if (data.password == password) {
                     [this.#currentUser.id, this.#currentUser.password] = [id, password];
                     localStorage.setItem("currentUser", JSON.stringify(this.#currentUser));
-                    return 0;
-                } else return 1;
+                    return 1;
+                } else return 0;
             }
         }
-        return 2;
+        return 0;
     }
 
     /**

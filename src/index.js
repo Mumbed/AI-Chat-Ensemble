@@ -6,10 +6,13 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
+// 로그인 정보 동기화를 위한 의존성.
+import LoginManager from "./util/LoginManager";
+
 // 페이지 아래 스낵바를 구현하기 위한 의존성
 import { SnackbarProvider} from "notistack";
 
-// 사이트 레이아웃 및 각 페이지 정보를 자동으로 라우팅 해주는 기본 컴포넌트 의존성
+// 사이트 레이아웃 및 기본 컴포넌트 의존성.
 import "./index.css";
 import App from "./App";
 

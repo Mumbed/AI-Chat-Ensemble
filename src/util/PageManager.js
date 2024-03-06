@@ -3,21 +3,21 @@
  */
 
 export default class PageManager {
-    static #pagelist = [
-        {
-            title: "질문하기",
-            href: "/question"
-        },
-        {
-            title: "통계보기",
-            href: "/summary"
-        },
-        {
-            title: "AI종류보기",
-            href: "/ailist"
-        }
-    ];
-    static get list() {
-        return this.#pagelist;
+  static #pagelist = [
+    {
+      title: "질문하기",
+      href: "/question"
+    },
+    {
+      title: "통계보기",
+      href: "/summary"
+    },
+    {
+      title: "AI종류보기",
+      href: "/ailist"
     }
+  ];
+  static get list() {
+    return this.#pagelist;
+  }
 }
