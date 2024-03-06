@@ -42,6 +42,7 @@ export default function LoginForm() {
           background: "rgb(60, 144, 255)",
           border: "none",
           borderRadius: "10px",
+          marginTop: "20px",
           padding: "10px"
         }} type="submit"></input>
         <span style={{

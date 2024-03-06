@@ -15,8 +15,10 @@ export default function LoginTitle() {
         borderColor: "rgba(200, 200, 200, 0.6)"
       }}></hr>
       <p style={{
+        display: "inline-block",
+        marginTop: "0px",
+        marginBottom: "30px",
         fontSize: "20px",
-        display: "inline"
       }}>ACE에 오신걸 환영합니다.</p>
     </>
   ) 
