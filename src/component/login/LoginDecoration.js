@@ -7,8 +7,9 @@ export default function LoginDecoration() {
     <>
       <div style ={{
         position: "absolute",
-        width: "280px",
-        height: "180px",
+        minWidth: "200px",
+        width: "20%",
+        height: "20%",
         top: "-80px",
         left: "0px",
         border: "1px solid rgba(255, 255, 255, 0.3)",
