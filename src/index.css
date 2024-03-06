@@ -67,8 +67,8 @@ hr {
 .split_box {
   display: flex;
   position: relative;
-  left: 10%;
-  width: 80%;
+  left: 5%;
+  width: 90%;
   padding: 20px;
   overflow-x: scroll;
 }
@@ -84,7 +84,7 @@ hr {
 
 .split_box > * {
   box-sizing: border-box;
-  width: 30%;
+  width: 40%;
   min-width: 360px;
   flex-grow: 0;
   flex-shrink: 0;
