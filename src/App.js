@@ -9,7 +9,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./component/main/Header";
 
 // 각 페이지와 관련된 의존성
-import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 
 export default function App() {
@@ -17,8 +16,7 @@ export default function App() {
     <BrowserRouter>
       <Header></Header>
       <Routes>
-        <Route path="/login" Component={Login} />
-        <Route path="*" Component={Landing} />
+        <Route path="*" Component={Login} />
       </Routes>
     </BrowserRouter>
   );
