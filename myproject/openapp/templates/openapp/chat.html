@@ -126,25 +126,13 @@
                         <button type="submit">Send to Gemini</button>
                     </form>
                 </div>
-                {% comment %} <div style="width: 500px; min-width: 500px; ">
-                    <div class="chat">
-                        {% for chat in clova_chats %}
-                            <div class="message">
-                                <div class="user-message">{{ chat.question }}</div>
-                            </div>
-                            <div class="message">
-                                <div class="ai-message">{{ chat.response }}</div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <form method="post" action="{% url 'chat' chat_room_id=chat_room_id %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="source" value="clova">
-                        <input type="text" name="question">
-                        <button type="submit">Send to Clova</button>
-                    </form>
-                    
-                </div> {% endcomment %}
+                <form method="post" action="{% url 'chat' chat_room_id=chat_room_id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="source" value="both">
+                    <input type="text" name="question">
+                    <button type="submit">Send to GPT and Gemini</button>
+                </form>
+                
             </div>
         
         </div>
