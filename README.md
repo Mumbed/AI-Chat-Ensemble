@@ -15,7 +15,6 @@
 
 ## db - postgres, mysql? 생각해보기
 
-## git test 명진
 
 ## 실행법
 ## 1. 프로젝트 다운로드
