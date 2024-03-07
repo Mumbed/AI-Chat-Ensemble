@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
 from rest_framework.views import APIView
@@ -62,3 +63,4 @@ class UserLogout(View):
     def post(self, request):
         auth_logout(request)
         return redirect('/login')
+    
