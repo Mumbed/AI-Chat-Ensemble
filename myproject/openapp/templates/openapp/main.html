@@ -38,7 +38,6 @@
             {% if user.email == chat.user.email %}
                 <div class="chat">
                     <p>Question: <a href="{% url 'chat' chat_room_id=chat.chat_room_id %}">{{ chat.question }}</a></p>
-                    <!-- <p>Response: {{ chat.response }}</p> -->
                     <p>Source: {{ chat.source }}</p>
                 </div>
             {% endif %}
