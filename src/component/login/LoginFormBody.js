@@ -11,8 +11,8 @@ import LoginInput from "./LoginInput"
 export default function LoginFormBody() {
   return (
     <>
-      <LoginInput id="email" label="Username" placeholder="Enter your email." onchange={e => id = e.target.value}></LoginInput>
-      <LoginInput id="password" label="Password" placeholder="Enter your password." onchange={e => password = e.target.value}></LoginInput>
+      <LoginInput id="email" label="Username" placeholder="Enter your email."></LoginInput>
+      <LoginInput id="password" label="Password" placeholder="Enter your password."></LoginInput>
       <Link style={{
         fontSize: "14px",
         flexDirection: "row-reverse",

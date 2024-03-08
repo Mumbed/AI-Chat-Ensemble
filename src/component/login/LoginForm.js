@@ -17,11 +17,10 @@ import LoginFooter from "./LoginFooter";
 export default function LoginForm() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  let id = "";
-  let password = "";
-  const submit = e => {
+  const submit = async e => {
     e.preventDefault();
-    LoginManager.login({id, password}) ? navigate("/main") : enqueueSnackbar("이메일 또는 비밀번호가 잘못되었습니다.", { 
+    const loginStatus = await LoginManager.login(new FormData(e.target))
+    loginStatus == true ? navigate("/main") : enqueueSnackbar(loginStatus, { 
       variant: 'error',
     })
   }

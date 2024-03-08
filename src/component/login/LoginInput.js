@@ -2,7 +2,7 @@
  * 로그인 입력필드를 구성하는 컴포넌트.
  */
 
-export default function LoginInput({id, label, onchange, placeholder}) {
+export default function LoginInput({id, label, placeholder}) {
   return (
     <div style={{
       display: "flex",
@@ -20,7 +20,7 @@ export default function LoginInput({id, label, onchange, placeholder}) {
         borderRadius: "10px",
         padding: "10px",
         background: "linear-gradient(45deg, rgba(200, 200, 200, 0.8), rgba(200, 200, 200, 0.1))"
-      }} id={id} type={id == "password" ? "password" : "text"} placeholder={placeholder} onChange={onchange}></input>
+      }} name={id} type={id == "password" ? "password" : "text"} placeholder={placeholder}></input>
     </div>
   )
 }
