@@ -5,7 +5,7 @@
 // 페이지 이동 처리를 의한 위존성.
 import { Link, useLocation } from "react-router-dom"
 
-// Header의 조각 컴포넌트.
+// 부분 컴포넌트 의존성.
 import HeaderLinker from "./HeaderLinker"
 
 export default function Header() {

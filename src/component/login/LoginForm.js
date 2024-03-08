@@ -9,9 +9,10 @@ import { Link, useNavigate } from "react-router-dom";
 // 하단 스낵바 출력을 위한 의존성.
 import { useSnackbar } from "notistack";
 
-// LoginForm의 조각 컴포넌트
-import LoginTitle from "./LoginTitle";
-import LoginInput from "./LoginInput";
+// 부분 컴포넌트 의존성.
+import LoginFormHeader from "./LoginFormHeader";
+import LoginFormBody from "./LoginFormBody";
+import LoginFooter from "./LoginFooter";
 
 export default function LoginForm() {
   const { enqueueSnackbar } = useSnackbar();
@@ -27,33 +28,9 @@ export default function LoginForm() {
   return (
     <form onSubmit={submit}>
       <fieldset> 
-        <LoginTitle></LoginTitle>
-        <LoginInput id="email" label="Username" placeholder="Enter your email." onchange={e => id = e.target.value}></LoginInput>
-        <LoginInput id="password" label="Password" placeholder="Enter your password." onchange={e => password = e.target.value}></LoginInput>
-        <Link style={{
-          fontSize: "14px",
-          flexDirection: "row-reverse",
-          top: "-20px",
-          color: "rgba(255, 255, 255, 0.6)"
-        }} to="/forgot">Forgot Password?</Link>
-        <input style={{
-          width: "100%",
-          cursor: "pointer",
-          background: "rgb(60, 144, 255)",
-          border: "none",
-          borderRadius: "10px",
-          marginTop: "20px",
-          padding: "10px"
-        }} type="submit"></input>
-        <span style={{
-          display: "block",
-          width: "100%",
-          color: "rgba(255, 255, 255, 0.6)",
-          textAlign: "center",
-          marginTop: "10px"
-        }}>처음이신가요? <Link style={{
-          display: "inline"
-        }} to="/register">회원가입</Link>하기</span>
+        <LoginFormHeader></LoginFormHeader>
+        <LoginFormBody></LoginFormBody>
+        <LoginFooter></LoginFooter>
       </fieldset>
     </form>
   )

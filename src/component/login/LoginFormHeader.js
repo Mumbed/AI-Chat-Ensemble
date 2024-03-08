@@ -2,7 +2,7 @@
  * 로그인 창을 꾸며주는 컴포넌트. 
  */
 
-export default function LoginTitle() {
+export default function LoginFormHeader() {
   return (
     <>
       <legend style ={{
