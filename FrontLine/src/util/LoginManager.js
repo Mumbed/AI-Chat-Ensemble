@@ -2,30 +2,21 @@
  * 사이트의 로그인 관련 처리를 관리하는 클래스.
  */
 
-// 현재 서버상에 등록된 유저 정보
-const sample = {
-    list: [
-        {id: "hello@gmail.com", password:  "a12345"},
-        {id: "kity@gmail.com", password:  "b56789"}
-    ]
-}
+// 서버 연결을 위한 의존성
+import axios from "axios";
 
 // 사이트 Login 정보를 관리하는 LoginManager 클래스.
 export default class LoginManager {
     
     // 현재 로그인 된 유저 정보. (외부에선 열람 불가)
-    static #currentUser = {
-        id: null,
-        password: null
-    }
+    static #currentUser = null;
 
     /**
      * @type {() => Boolean}
      * @description 현재 사이트에 성공적으로 로그인 되어 있는지의 여부를 반환.
      */
     static get isLogined() {
-        const userInfo = this.#currentUser;
-        return (userInfo.id && userInfo.password);
+        return (typeof this.#currentUser == "string")
     }
 
     /**

@@ -1,27 +1,25 @@
-import React, { useState } from "react";
-import axios from "axios";
+/**
+ * 사이트 엔드포인트에 들어갈 기본 라우팅 컴포넌트.
+ */
 
-function App() {
-  const [text, setText] = useState("없음");
+// 경로 자동 라우팅에 관련된 의존성.
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-  const clicked = () => {
-    axios
-      .get("http://127.0.0.1:8000/test", {
-        params: {
-          abc: "가나다", //abc에 가나다 저장
-        },
-      })
-      .then((response) => setText(JSON.stringify(response.data)));
-  };
+// 헤더 컴포넌트 의존성.
+import Header from "./component/header/Header";
 
+// 페이지 의존성.
+import Login from "./pages/Login";
+import Landing from "./pages/Landing";
+
+export default function App() {
   return (
-    <div>
-      <h1>{text}</h1>
-      <button onClick={clicked}>클릭</button>
-    </div>
+    <BrowserRouter>
+      <Header></Header>
+      <Routes>
+        <Route path="/Login" Component={Login} />
+        <Route path="*" Component={Landing} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
-
-//해당 url로 접속하면 장고에서는 함수 실행 
