@@ -20,7 +20,6 @@ export default function LoginForm() {
   const submit = async e => {
     e.preventDefault();
     const loginStatus = await LoginManager.login(new FormData(e.target))
-    console.log(loginStatus)
     loginStatus == true ? navigate("/main") : enqueueSnackbar(loginStatus, { 
       variant: 'error',
     })

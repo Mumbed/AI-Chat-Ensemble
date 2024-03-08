@@ -8,7 +8,7 @@ import axios from "axios";
 // 사이트 Login 정보를 관리하는 LoginManager 클래스.
 export default class LoginManager {
     
-    // 현재 로그인 된 유저 정보. (외부에선 열람 불가)
+    // 현재 로그인 된 유저 토큰. (외부에선 열람 불가)
     static #currentUser = null;
 
     /**
@@ -20,20 +20,17 @@ export default class LoginManager {
     }
 
     /**
-     * @type {(id: string, dataset: string) => Boolean}
-     * @description 로그인 성공 여부에 따라 1은 성공, 0은 실패.
+     * @type {(formdata: FormData) => Promise<Boolean | String>}
+     * @description 로그인 시도. 성공하면 true, 실패하면 사유를 담은 문자열을 반환.
      */
-    static login({id, password}) {
-        for (let data of sample.list) {
-            if (data.id == id) {
-                if (data.password == password) {
-                    [this.#currentUser.id, this.#currentUser.password] = [id, password];
-                    localStorage.setItem("currentUser", JSON.stringify(this.#currentUser));
-                    return 1;
-                } else return 0;
-            }
+    static async login(formdata) {
+        try {
+            const { data } = await axios.post(process.env.REACT_APP_BACKEND, formdata);
+            this.#currentUser = data;
+            return true;
+        } catch (e) {
+            return e.response.data.message
         }
-        return 0;
     }
 
     /**
@@ -41,10 +38,7 @@ export default class LoginManager {
      * @description 현재 사용자의 로그인 정보를 삭제하고, false를 리턴.
      */
     static logout() {
-        this.#currentUser = {
-            id: null,
-            password: null
-        }
+        this.#currentUser = null;
         localStorage.removeItem("currentUser");
         return false;
     }
