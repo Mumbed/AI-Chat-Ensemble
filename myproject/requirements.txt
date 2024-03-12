@@ -8,6 +8,7 @@ clovax==0.1.1
 colorama
 distro
 Django==5.0.2
+django-cors-headers
 djangorestframework==3.14.0
 exceptiongroup
 google-ai-generativelanguage==0.4.0
