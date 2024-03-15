@@ -21,8 +21,10 @@ body::-webkit-scrollbar {
 
 header {
   display: flex;
+  position: relative;
   height: 60px;
-  padding: 0 10% 0 10%;
+  padding: 0 10%;
+  z-index: 1;
 }
 
 header > a {
@@ -45,11 +47,18 @@ fieldset {
   position: relative;
   border: none;
   border-radius: 25px;
-  background: rgba(220, 220, 220, 0.3);
   padding: 25px;
+  background: rgba(220, 220, 220, 0.3);
+}
+.non-color {
+  background: none;
 }
 fieldset > * {
   position: relative;
+}
+
+h1, h2, h3, h4, h5 {
+  text-align: center;
 }
 
 a {
@@ -69,7 +78,6 @@ hr {
   position: relative;
   left: 5%;
   width: 90%;
-  padding: 20px;
   overflow-x: scroll;
 }
 
@@ -84,8 +92,9 @@ hr {
 
 .split_box > * {
   box-sizing: border-box;
-  width: 40%;
-  min-width: 360px;
+  width: 100%;
+  min-width: 325px;
+  max-width: 40%;
   flex-grow: 0;
   flex-shrink: 0;
 }
