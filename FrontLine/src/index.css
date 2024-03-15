@@ -57,6 +57,14 @@ fieldset > * {
   position: relative;
 }
 
+input:is([type=button], [type=submit]) {
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px;
+}
+
 h1, h2, h3, h4, h5 {
   text-align: center;
 }
