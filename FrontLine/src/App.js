@@ -6,18 +6,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // 헤더 컴포넌트 의존성.
-import Header from "./component/header/Header";
+import Header from "./component/Header";
 
 // 페이지 의존성.
 import Login from "./pages/Login";
 import Landing from "./pages/Landing";
+import Register from "./pages/Register";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Header></Header>
       <Routes>
-        <Route path="/Login" Component={Login} />
+        <Route path="/login" Component={Login} />
+        <Route path="/register" Component={Register} />
         <Route path="*" Component={Landing} />
       </Routes>
     </BrowserRouter>

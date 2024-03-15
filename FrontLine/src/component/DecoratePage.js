@@ -2,7 +2,10 @@
  * 로그인 페이지를 꾸며주는 컴포넌트.
  */
 
-export default function LoginDecoration() {
+/**
+ * @type {() => React.ReactElement}
+ */
+export default function DecoratePage() {
   return (
     <>
       <div style ={{

@@ -3,9 +3,12 @@
  */
 
 // 페이지 이동 처리를 의한 위존성.
-import LoginManager from "../util/LoginManager";
+import { LoginManager } from "../util/UserManager";
 import { Navigate } from "react-router-dom";
 
+/**
+ * @type {() => React.ReactElement}
+ */
 export default function Landing() {
   return LoginManager.isLogined ? <Navigate to="/main" /> : <Navigate to="/login" />
 }

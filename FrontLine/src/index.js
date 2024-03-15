@@ -7,7 +7,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 // 로그인 정보 동기화를 위한 의존성.
-import LoginManager from "./util/LoginManager";
+import { LoginManager } from "./util/UserManager";
 
 // 페이지 아래 스낵바를 구현하기 위한 의존성
 import { SnackbarProvider} from "notistack";
