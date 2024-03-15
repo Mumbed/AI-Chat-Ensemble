@@ -1,11 +1,9 @@
-/**
- * 유저 정보 관련 처리를 관리하는 클래스.
- */
-
 // 서버 연결을 위한 의존성
 import axios from "axios";
 
-// 로그인을 처리하는 LoginManager 클래스.
+/**
+ * @description 로그인 처리 클래스.
+ */
 class LoginManager {
     // 현재 로그인 된 유저 토큰.
     static #userUid = null;
@@ -16,8 +14,10 @@ class LoginManager {
      */
     static login = async form => {
         try {
-            const { data } = await axios.post(process.env.REACT_APP_BACKEND, form);
-            this.#userUid = data;
+            const data = await axios.post(process.env.REACT_APP_BACKEND, form);
+            this.#userUid = data.data.token;
+            localStorage.setItem("token", data.data.token)
+            console.dir(data)
             return true;
         } catch (e) {
             return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
@@ -52,10 +52,9 @@ class LoginManager {
     }
 }
 
-
-
-
-// 회원가입을 처리하는 LoginManager 클래스.
+/**
+ * @description 회원가입 처리 클래스.
+ */
 class RegistManager {
     /**
      * @type {(form: FormData) => Promise<Boolean | String>}
@@ -74,4 +73,5 @@ class RegistManager {
         }
     }
 }
+
 export {LoginManager, RegistManager}

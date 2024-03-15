@@ -1,11 +1,9 @@
 /**
- * 입력필드를 구성하는 컴포넌트.
- */
-
-/**
+ * @description 입력필드를 구성하는 컴포넌트.
  * @type {(props: {name: string, placeholder: string}) => React.ReactElement}
  */
 export default function InputBox({name, placeholder}) {
+  // 컴포넌트 반환
   return (
     <div style={{
       display: "flex",

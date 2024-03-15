@@ -10,7 +10,7 @@ import Header from "./component/Header";
 
 // 페이지 의존성.
 import Login from "./pages/Login";
-import Landing from "./pages/Landing";
+import Index from "./pages/Index";
 import Register from "./pages/Register";
 
 export default function App() {
@@ -20,7 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
-        <Route path="*" Component={Landing} />
+        <Route path="*" Component={Index} />
       </Routes>
     </BrowserRouter>
   );

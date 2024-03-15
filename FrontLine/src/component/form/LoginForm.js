@@ -1,7 +1,3 @@
-/**
- * 로그인 폼 컴포넌트
- */
-
 // 페이지 이동 처리를 위한 위존성.
 import { LoginManager } from "../../util/UserManager";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +8,7 @@ import { useSnackbar } from "notistack";
 
 // 부분 컴포넌트 의존성.
 import InputBox from "../box/InputBox";
-import SubmitButton from "../SubmitButton";
+import Button from "../Button";
 
 /**
  * @type {() => React.ReactElement}
@@ -55,7 +51,7 @@ function LoginFormBody() {
         top: "-20px",
         color: "rgba(255, 255, 255, 0.6)"
       }} to="/forgot">Forgot Password?</Link>
-      <SubmitButton text="로그인"></SubmitButton>
+      <Button text="로그인" canSubmit={true}></Button>
     </>
   )
 }
@@ -79,6 +75,7 @@ function LoginFormFooter() {
 }
 
 /**
+ * @description 로그인 폼 컴포넌트.
  * @type {() => React.ReactElement}
  */
 export default function LoginForm() {

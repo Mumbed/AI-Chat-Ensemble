@@ -1,12 +1,9 @@
-/**
- * 사이트 헤더 컴포넌트.
- */
-
 // 페이지 이동 처리를 의한 위존성.
 import PageManager from "../util/PageManager"
 import { Link, useLocation } from "react-router-dom"
 
 /**
+ * @description 헤더 컴포넌트.
  * @type {() => React.ReactElement}
  */
 export default function Header() {
