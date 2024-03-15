@@ -4,7 +4,7 @@ from django.views import View
 from rest_framework.views import APIView
 from .models import CustomUser
 from django.contrib.auth.hashers import make_password, check_password
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login, logout
 from django.contrib.auth import logout as auth_logout
 
 from rest_framework.response import Response
@@ -31,12 +31,19 @@ class Login(APIView):
         if check_password(password, user.password) is False:
             return Response(status=400, data=dict(message='입력정보가 잘못되었습니다.'))
 
-        request.session['loginCheck'] = True
+        # request.session['loginCheck'] = True
+        # request.session['email'] = user.email
+        # if user is not None:
+        #     login(request,user=user)
+        #     return redirect('/main')
+        # 토큰 생성
+        token = uuid4().hex
+        request.session['token'] = token
         request.session['email'] = user.email
-        if user is not None:
-            login(request,user=user)
-            return redirect('/main')
-        return Response(status=200, data=dict(message='로그인 성공'))
+        login(request, user=user)
+        response = Response(status=200, data=dict(message='로그인 성공'))
+        response.set_cookie(key='token', value=token, httponly=True)
+        return response
 
 
 class Join(APIView):
@@ -58,9 +65,13 @@ class Join(APIView):
 
 class UserLogout(View):
     def get(self, request):
-        auth_logout(request)
-        return redirect('/login')
+        logout(request)
+        response = redirect('/login')
+        response.delete_cookie('token')
+        return response
+
     def post(self, request):
-        auth_logout(request)
-        return redirect('/login')
-    
+        logout(request)
+        response = redirect('/login')
+        response.delete_cookie('token')
+        return response
