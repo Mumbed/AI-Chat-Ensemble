@@ -3,9 +3,8 @@ import { LoginManager } from "../util/UserManager";
 import { Navigate } from "react-router-dom";
 
 // 부분 컴포넌트 의존성.
-import PageDecoration from "../component/PageDecoration";
-import SplitBox from "../component/box/SplitBox";
 import LoginForm from "../component/form/LoginForm";
+import { SplitFieldX } from "../component/Container/XContainer";
 
 /**
  * @description 로그인 페이지.
@@ -15,12 +14,9 @@ export default function Login() {
   // 컴포넌트 반환
   if (LoginManager.isLogined) return <Navigate to="/main" />
   return (
-    <>
-      <PageDecoration></PageDecoration>
-      <SplitBox>
-        <img src="img/dog.png"></img>
-        <LoginForm></LoginForm>
-      </SplitBox>
-    </>
+    <SplitFieldX length="2">
+      <LoginForm></LoginForm>
+      <img src="img/dog.png"></img>
+    </SplitFieldX>
   )
 }

@@ -1,5 +1,5 @@
 // 부분 컴포넌트 의존성.
-import * as Container from "../component/IndexContainer";
+import * as Container from "../component/Container/IndexContainer";
 
 /**
  * @description 초기 화면 페이지.

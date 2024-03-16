@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
 // 부분 컴포넌트 의존성.
-import InputBox from "../box/InputBox";
-import Button from "../Button";
+import { ButtonX, InputX } from "../Container/XContainer";
 
 /**
  * @type {() => React.ReactElement}
@@ -19,18 +18,18 @@ function LoginFormHeader() {
     <>
       <legend style ={{
         top: "40px",
-        fontFamily: "math",
-        fontSize: "xxx-large"
-      }}>Login</legend>
-      <hr style={{
-        width: "150px",
-        borderColor: "rgba(200, 200, 200, 0.6)"
-      }}></hr>
+        width: "100%",
+        color: "slateblue",
+        textAlign: "center",
+        fontSize: "xxx-large",
+        fontWeight: "600"
+      }}>WELCOME BACK</legend>
       <p style={{
         display: "inline-block",
-        marginTop: "0px",
-        marginBottom: "30px",
-        fontSize: "20px",
+        width: "100%",
+        color: "rgba(150, 150, 150, 0.5)",
+        textAlign: "center",
+        fontSize: "18px",
       }}>ACE에 오신걸 환영합니다.</p>
     </>
   )
@@ -43,15 +42,15 @@ function LoginFormBody() {
   // 컴포넌트 반환
   return (
     <>
-      <InputBox name="email" placeholder="Enter your email."></InputBox>
-      <InputBox name="password" placeholder="Enter your password."></InputBox>
+      <InputX name="email" placeholder="Enter your email."></InputX>
+      <InputX name="password" placeholder="Enter your password."></InputX>
       <Link style={{
         fontSize: "14px",
         flexDirection: "row-reverse",
         top: "-20px",
         color: "rgba(255, 255, 255, 0.6)"
       }} to="/forgot">Forgot Password?</Link>
-      <Button text="로그인" canSubmit={true}></Button>
+      <ButtonX text="로그인" canSubmit={true}></ButtonX>
     </>
   )
 }

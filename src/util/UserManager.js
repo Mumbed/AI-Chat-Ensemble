@@ -14,10 +14,9 @@ class LoginManager {
      */
     static login = async form => {
         try {
-            const data = await axios.post(process.env.REACT_APP_BACKEND, form);
-            this.#userUid = data.data.token;
+            const { data } = await axios.post(process.env.REACT_APP_BACKEND, form);
+            this.#userUid = data.token;
             localStorage.setItem("token", data.data.token)
-            console.dir(data)
             return true;
         } catch (e) {
             return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
@@ -69,7 +68,7 @@ class RegistManager {
             const { data } = await axios.post(`${process.env.REACT_APP_BACKEND}/join/`, formFetch);
             return await LoginManager.login(form);
         } catch (e) {
-            return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
+            return e.code == "ERR_NETWORK" ? "로그인 서버에 연결할 수 없습니다." : e.response.data.message;
         }
     }
 }
