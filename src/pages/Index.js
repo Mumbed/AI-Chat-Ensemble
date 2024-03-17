@@ -1,6 +1,6 @@
 // 부분 컴포넌트 의존성.
 import { useNavigate } from "react-router-dom";
-import { ButtonX, SplitFieldX } from "../component/Container/XContainer";
+import { ButtonX, SpliterX } from "../component/Container/XContainer";
 import { ChatGPTExample, CopliotExample, GeminiExample } from "../component/Container/ExampleContainer";
 
 function Introduction() {
@@ -11,7 +11,7 @@ function Introduction() {
   return (
     <>
       <h1>ACE를 소개합니다.</h1>
-      <SplitFieldX length="1">
+      <SpliterX length="1">
         <img src="img/dog_index.png"></img>
         <div>
           <h2>ACE는 명령을 받은 강아지처럼 다양한곳에서 답변을 물어옵니다.</h2>
@@ -23,7 +23,7 @@ function Introduction() {
             <ButtonX text="사용방법" color={["black", "white"]} autoScale={false}></ButtonX>
           </div>
         </div>
-      </SplitFieldX>
+      </SpliterX>
     </>
   )
 }
@@ -41,11 +41,11 @@ function Example() {
         fontSize: "smaller",
         color: "darkgray"
       }}>GPT, gemini등 다양한 대화형 AI에게 물어볼게요.</p>
-      <SplitFieldX length="3">
+      <SpliterX length="3">
         <ChatGPTExample></ChatGPTExample>
         <GeminiExample></GeminiExample>
         <CopliotExample></CopliotExample>
-      </SplitFieldX>
+      </SpliterX>
     </>
   )
 }

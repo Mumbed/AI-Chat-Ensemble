@@ -1,5 +1,5 @@
 // 페이지 이동 처리를 의한 위존성.
-import { Link, useLocation } from "react-router-dom"
+import { Link, Navigate, useLocation } from "react-router-dom"
 
 /**
  * @description 헤더 컴포넌트.
@@ -80,10 +80,18 @@ function ButtonX({text, color=["white", "mediumpurple"], autoScale=true, canSubm
 }
 
 /**
+ * @description 보안 점검 컴포넌트.
+ * @type {(props: {query: Function, rejectedRedirect: string, children: string | React.ReactElement}) => React.ReactElement}
+ */
+function ProtecterX({query, rejectedRedirect, children}) {
+  return query() ? children : <Navigate to={rejectedRedirect}></Navigate>;
+}
+
+/**
  * @description 분할 필드 컴포넌트.
  * @type {(props: {length: Number, children: string | React.ReactElement}) => React.ReactElement}
  */
-function SplitFieldX({length, children}) {
+function SpliterX({length, children}) {
   // 컴포넌트 처리
   children = 1 < length ? children.map((obj, i) => <div key={i}>{obj}</div>) : <div>{children}</div>
 
@@ -91,4 +99,4 @@ function SplitFieldX({length, children}) {
   return <div className="split_box">{children}</div>
 }
 
-export { HeaderX, InputX, ButtonX, SplitFieldX }
+export { HeaderX, InputX, ButtonX, ProtecterX, SpliterX }
