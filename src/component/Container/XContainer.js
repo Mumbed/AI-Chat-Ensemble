@@ -1,5 +1,4 @@
 // 페이지 이동 처리를 의한 위존성.
-import PageManager from "../../util/PageManager"
 import { Link, useLocation } from "react-router-dom"
 
 /**
@@ -8,6 +7,20 @@ import { Link, useLocation } from "react-router-dom"
  */
 function HeaderX() {
   // 컴포넌트 처리
+  const pageMap = [
+    {
+      title: "질문하기",
+      href: "/question"
+    },
+    {
+      title: "통계보기",
+      href: "/summary"
+    },
+    {
+      title: "AI종류보기",
+      href: "/ailist"
+    }
+  ];
   const location = useLocation();
 
   // 컴포넌트 반환
@@ -17,7 +30,7 @@ function HeaderX() {
         fontWeight: "bold"
       }} to="/">ACE</Link>
       <div>
-        {PageManager.list.map((pageinfo) => <Link key={pageinfo.href} style={pageinfo.href == location.pathname ? {color: "cyan"} : null} to={pageinfo.href}>{pageinfo.title}</Link>)}
+        {pageMap.map((pageinfo) => <Link key={pageinfo.href} style={pageinfo.href == location.pathname ? {color: "cyan"} : null} to={pageinfo.href}>{pageinfo.title}</Link>)}
       </div>
     </header>
   )

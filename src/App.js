@@ -12,6 +12,8 @@ import { HeaderX } from "./component/Container/XContainer";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
+import ThemeScene from "./pages/question/ThemeScene";
+import DetailedScene from "./pages/question/DetailedScene";
 
 export default function App() {
   return (
@@ -23,6 +25,9 @@ export default function App() {
         width: "100%"
       }}>
         <Routes>
+          <Route path="/question/:theme" Component={DetailedScene}></Route>
+          <Route path="/question" Component={ThemeScene}></Route>
+
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
           <Route path="*" Component={Index} />

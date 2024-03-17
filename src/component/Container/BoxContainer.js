@@ -47,4 +47,38 @@ function ResponseBox({aiName, mainTitle, children}) {
   )
 }
 
-export { ResponseBox }
+/**
+ * @description 알림 필드 컴포넌트
+ * @type {(props: {img: string, title: string, children: string | React.ReactElement}) => React.ReactElement}
+ */
+function NoticeBox({img, title, children}) {
+  return (
+    <div style={{
+      display: "flex",
+      width: "400px",
+      margin: "100px auto",
+      padding: "10px",
+      color: "black",
+      background: "white",
+      borderRadius: "20px"
+    }}>
+      <img style={{
+        width: "60px",
+        height: "60px",
+        margin: "auto 20px"
+      }}src={img}></img>
+      <div style={{
+        textAlign: "center"
+      }}>
+        <h2 style={{
+          marginBottom: "0px"
+        }}>{title}</h2>
+        <p style={{
+          marginTop: "10px"
+        }}>{children}</p>
+      </div>
+    </div>
+  )
+}
+
+export { ResponseBox, NoticeBox }
