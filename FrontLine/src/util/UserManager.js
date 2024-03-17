@@ -16,10 +16,11 @@ class LoginManager {
         try {
             const { data } = await axios.post(process.env.REACT_APP_BACKEND, form);
             this.#userUid = data.token;
-            localStorage.setItem("token", data.data.token)
+            localStorage.setItem("token", data.token)
             return true;
         } catch (e) {
-            return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
+            console.dir(e)
+            //return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
         }
     }
 
@@ -65,7 +66,7 @@ class RegistManager {
             let formFetch = {};
             for (let formdata of form.entries()) formFetch[formdata[0]] = formdata[1];
             if (formFetch.password != formFetch.check) return "비밀번호가 일치하지 않습니다.";
-            const { data } = await axios.post(`${process.env.REACT_APP_BACKEND}/join/`, formFetch);
+            await axios.post(`${process.env.REACT_APP_BACKEND}/join/`, formFetch);
             return await LoginManager.login(form);
         } catch (e) {
             return e.code == "ERR_NETWORK" ? "로그인 서버에 연결할 수 없습니다." : e.response.data.message;

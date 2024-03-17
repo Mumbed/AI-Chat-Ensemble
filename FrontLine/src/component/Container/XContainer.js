@@ -2,7 +2,6 @@
 import { Link, Navigate, useLocation } from "react-router-dom"
 
 /**
- * @description 헤더 컴포넌트.
  * @type {() => React.ReactElement}
  */
 function HeaderX() {
