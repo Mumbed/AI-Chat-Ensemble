@@ -19,8 +19,7 @@ class LoginManager {
             localStorage.setItem("token", data.token)
             return true;
         } catch (e) {
-            console.dir(e)
-            //return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
+            return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
         }
     }
 
