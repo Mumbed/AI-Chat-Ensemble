@@ -47,4 +47,4 @@ function ResponseBox({aiName, mainTitle, children}) {
   )
 }
 
-export { ResponseBox  }
+export { ResponseBox }
