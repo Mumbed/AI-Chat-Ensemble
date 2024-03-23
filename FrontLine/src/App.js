@@ -14,6 +14,8 @@ import Index from "./pages/Index";
 import Register from "./pages/Register";
 import ThemeScene from "./pages/question/ThemeScene";
 import DetailedScene from "./pages/question/DetailedScene";
+import SelectRoom from "./pages/question/SelectRoom";
+import PrintResponse from "./pages/question/PrintResponse";
 
 export default function App() {
   return (
@@ -25,8 +27,10 @@ export default function App() {
         width: "100%"
       }}>
         <Routes>
-          <Route path="/question/:theme" Component={DetailedScene}></Route>
-          <Route path="/question" Component={ThemeScene}></Route>
+        <Route path="/question/:roomid/first" Component={ThemeScene}></Route>
+          <Route path="/question/:roomid/main" Component={PrintResponse}></Route>
+          <Route path="/question/:roomid/:topic" Component={DetailedScene}></Route>
+          <Route path="/question" Component={SelectRoom}></Route>
 
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />

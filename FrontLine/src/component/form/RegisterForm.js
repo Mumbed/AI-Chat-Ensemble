@@ -1,5 +1,5 @@
 // 페이지 이동 처리를 위한 위존성.
-import { RegistManager } from "../../util/UserManager";
+import { AuthManagement } from "../../Management";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -65,7 +65,7 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const submit = async e => {
     e.preventDefault();
-    const status = await RegistManager.regist(new FormData(e.target))
+    const status = await AuthManagement.regist(new FormData(e.target))
     status == true ? navigate("/main") : enqueueSnackbar(status, { 
       variant: 'error',
     })

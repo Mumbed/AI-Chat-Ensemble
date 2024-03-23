@@ -2,9 +2,9 @@ import React from "react"
 
 /**
  * @description 응답 필드 컴포넌트.
- * @type {(props: {aiName: string, mainTitle: string, children: string | React.ReactElement}) => React.ReactElement}
+ * @type {(props: {aiName: string, children: string | React.ReactElement}) => React.ReactElement}
  */
-function ResponseBox({aiName, mainTitle, children}) {
+function ResponseBox({aiName, children}) {
   // 컴포넌트 처리
   const aiTag = {
     Chat_GPT: {
@@ -39,9 +39,6 @@ function ResponseBox({aiName, mainTitle, children}) {
           }}>@{aiTag[aiName].tech}</p>  
         </div>
       </div>
-      <h3 style={{
-        textAlign: "start"
-      }}>{mainTitle}</h3>
       <pre>{children}</pre>
     </fieldset>
   )
