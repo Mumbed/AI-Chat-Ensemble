@@ -5,23 +5,38 @@
 // 경로 자동 라우팅에 관련된 의존성.
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-// 헤더 컴포넌트 의존성.
-import Header from "./component/Header";
+// 부분 컴포넌트 의존성.
+import { HeaderX } from "./component/Container/XContainer";
 
 // 페이지 의존성.
 import Login from "./pages/Login";
-import Landing from "./pages/Landing";
+import Index from "./pages/Index";
 import Register from "./pages/Register";
+import ThemeScene from "./pages/question/ThemeScene";
+import DetailedScene from "./pages/question/DetailedScene";
+import SelectRoom from "./pages/question/SelectRoom";
+import PrintResponse from "./pages/question/PrintResponse";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Header></Header>
-      <Routes>
-        <Route path="/login" Component={Login} />
-        <Route path="/register" Component={Register} />
-        <Route path="*" Component={Landing} />
-      </Routes>
+      <HeaderX></HeaderX>
+      <div style={{
+        position: "absolute",
+        marginTop: "60px",
+        width: "100%"
+      }}>
+        <Routes>
+        <Route path="/question/:roomid/first" Component={ThemeScene}></Route>
+          <Route path="/question/:roomid/main" Component={PrintResponse}></Route>
+          <Route path="/question/:roomid/:topic" Component={DetailedScene}></Route>
+          <Route path="/question" Component={SelectRoom}></Route>
+
+          <Route path="/login" Component={Login} />
+          <Route path="/register" Component={Register} />
+          <Route path="*" Component={Index} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

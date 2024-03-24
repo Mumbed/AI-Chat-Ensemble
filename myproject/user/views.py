@@ -37,7 +37,7 @@ class Login(APIView):
         request.session['token'] = token
         request.session['email'] = user.email
         login(request, user=user)
-        response = Response(status=200, data=dict(message='로그인 성공'))
+        response = Response(status=200, data=dict(token=token))
         response.set_cookie(key='token', value=token, httponly=True)
         print("확인")
         print(response.cookies)
