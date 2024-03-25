@@ -16,6 +16,7 @@
 ## db - postgres, mysql? 생각해보기
 
 ## myeongjin - test22
+## myeongjin - test 3/25
 
 ## 실행법
 ## 1. 프로젝트 다운로드
