@@ -1,6 +1,9 @@
 from django.db import models
-from user.models import CustomUser
+# from user.models import CustomUser
 import uuid
+
+from user.models import CustomUser
+
 
 class Chat(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
