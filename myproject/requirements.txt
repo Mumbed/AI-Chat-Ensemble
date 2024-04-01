@@ -34,6 +34,7 @@ pydantic
 pydantic_core
 pytz==2024.1
 requests==2.31.0
+rest_framework_simplejwt
 rsa==4.9
 setuptools==69.0.3
 sniffio

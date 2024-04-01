@@ -31,7 +31,7 @@ function RegisterFormBody() {
       <InputX name="name" placeholder="Enter your name."></InputX>
       <InputX name="email" placeholder="Enter your name."></InputX>
       <InputX name="password" placeholder="Enter your name."></InputX>
-      <InputX name="check password" placeholder="Enter your name."></InputX>
+      <InputX name="verify password" placeholder="Enter your name."></InputX>
       <ButtonX text="회원가입" canSubmit={true}></ButtonX>
     </>
   )

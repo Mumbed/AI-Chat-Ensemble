@@ -5,9 +5,7 @@ import axios from "axios";
  * @description 인증 처리 클래스.
  */
 class AuthManagement {
-    // 현재 로그인 된 유저 토큰.
-    static #userUid = null;
-
+    static #isLogined;
     // 현재 로그인 된 유저가 소유한 채팅방 목록.
     static #rooms = null;
 
@@ -23,19 +21,23 @@ class AuthManagement {
     }
 
     /**
-     * @type {(form: FormData) => Promise<Boolean | String>}
+     * @type {(email: string, password: string, token: string) => Promise<Boolean | String>}
      * @description 로그인 시도. 성공하면 true, 실패하면 사유를 담은 문자열을 반환.
      */
-    static login = async form => {
+    static login = async ({email, password, token}) => {
         if (this.isLogined) return "이미 로그인 되어 있습니다."
         try {
-            const { data } = await axios.post(process.env.REACT_APP_BACKEND, form);
-            this.#userUid = data.token;
-            this.#rooms = [];
-            localStorage.setItem("token", data.token)
+            const data = await axios.post(process.env.REACT_APP_BACKEND, {
+                email: email,
+                password: password,
+                token: token
+            });
+            this.#isLogined = data.data.access;
+            //this.#rooms = data.data.chat_rooms;
+            localStorage.setItem("token", data.data.token);
             return true;
         } catch (e) {
-            return e.response.status == 400 ? e.response.data.message : "로그인 서버에 연결할 수 없습니다."
+            return e.response.status == 400 ? e.response.data.error : "로그인 서버에 연결할 수 없습니다."
         }
     }
 
@@ -46,15 +48,13 @@ class AuthManagement {
     static regist = async form => {
         if (this.isLogined) return "이미 로그인 되어 있습니다."
         try {
-            let formFetch = {};
-            for (let formdata of form.entries()) formFetch[formdata[0]] = formdata[1];
-            if (formFetch.password != formFetch.check) return "비밀번호가 일치하지 않습니다.";
-            const { data } = await axios.post(`${process.env.REACT_APP_BACKEND}/join/`, form);
-            this.#userUid = data.token;
-            this.#rooms = [];
+            const data = await axios.post(`${process.env.REACT_APP_BACKEND}register/`, form);
+            this.#isLogined = data.data.access;
+            this.#rooms = data.data.chat_rooms;
+            localStorage.setItem("token", data.data.token);
             return true;
         } catch (e) {
-            return e.code == "ERR_NETWORK" ? "로그인 서버에 연결할 수 없습니다." : e.response.data.message;
+            return e.response.status == 400 ? e.response.data.error : "로그인 서버에 연결할 수 없습니다.";
         }
     }
 
@@ -64,7 +64,6 @@ class AuthManagement {
      */
      static logout = async  () => {
         await axios.post(`${process.env.REACT_APP_BACKEND}/logout`)
-        this.#userUid = null;
         return false;
     }
 
@@ -73,20 +72,11 @@ class AuthManagement {
      * @type {() => Boolean}
      */
     static get isLogined() {
-        return !!this.#userUid;
+        return this.#isLogined;
     }
 
     static get rooms() {
         return JSON.parse(JSON.stringify(this.#rooms));
-    }
-
-    /**
-     * @description 현재 유저의 uid 값을 반환. 유저가 로그인 되어 있지 않으면 RangeError를 반환
-     * @type {() => Boolean | RangeError}
-     */
-    static get userUid() {
-        if (this.isLogined) 
-        return this.isLogined ? this.#userUid : new RangeError("로그인을 먼저 해주세요.");
     }
 }
 /**

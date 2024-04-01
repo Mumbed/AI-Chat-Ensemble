@@ -1,76 +1,94 @@
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
-from django.views import View
+from django.shortcuts import render
 from rest_framework.views import APIView
-from .models import CustomUser
-from django.contrib.auth.hashers import make_password, check_password
-from django.contrib.auth import authenticate, login
-from django.contrib.auth import logout as auth_logout
-
 from rest_framework.response import Response
-from uuid import uuid4
-import os
+from .models import CustomUser  # Assuming ChatRoom is a model that contains chat room information for a user
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny
+from django.contrib.auth.hashers import make_password
+import secrets
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 class Login(APIView):
-    def get(self, request):
-        return render(request, 'user/login.html')
+    permission_classes = [AllowAny]
 
     def post(self, request):
-        email = request.data.get('email', None)
-        password = request.data.get('password', None)
-        if email is None:
-            return Response(status=400, data=dict(message='이메일이 입력되지 않았습니다.'))
+        token = request.data.get('token')
+        if token:
+            try:
+                user = CustomUser.objects.get(token=token)
+                new_token = get_tokens_for_user(user)
+                #chat_rooms = list(user.chatroom_set.values_list('name', flat=True))
+                return Response({
+                    'token': new_token,
+                    'access': True,
+                    'email': user.email,
+                    #'chat_rooms': chat_rooms
+                }, status=200)
+            except CustomUser.DoesNotExist:
+                return Response({
+                    'access': False,
+                    'error': '유효하지 않은 토큰입니다.'
+                }, status=400)
+        else:
+            email = request.data.get('email')
+            password = request.data.get('password')
+            user = CustomUser.objects.filter(email=email).first()
+            if user is None or not user.check_password(password):
+                return Response({
+                    'access': False,
+                    'error': '이메일 또는 비밀번호가 잘못되었습니다.'
+                }, status=400)
+            new_token = get_tokens_for_user(user)
+            #chat_rooms = list(user.chatroom_set.values_list('name', flat=True)) 
+            return Response({
+                'token': new_token['access'],
+                'access': True,
+                'email': user.email,
+                #'chat_rooms': chat_rooms
+            }, status=200)
 
-        if password is None:
-            return Response(status=400, data=dict(message='비밀번호가 입력되지 않았습니다.'))
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
-        user = CustomUser.objects.filter(email=email).first()
-        if user is None:
-            return Response(status=400, data=dict(message='해당 이메일 주소로 가입된 계정이 없습니다.'))
-
-        if check_password(password, user.password) is False:
-            return Response(status=400, data=dict(message='입력정보가 잘못되었습니다.'))
-
-        request.session['loginCheck'] = True
-        request.session['email'] = user.email
-        token = uuid4().hex
-        request.session['token'] = token
-        request.session['email'] = user.email
-        login(request, user=user)
-        response = Response(status=200, data=dict(token=token))
-        response.set_cookie(key='token', value=token, httponly=True)
-        print("확인")
-        print(response.cookies)
-        return response
-
-        # if user is not None:
-        #     login(request,user=user)
-        #     return redirect('/main')
-        return Response(status=200, data=dict(message='로그인 성공'))
-
-
-class Join(APIView):
-    def get(self, request):
-        return render(request, 'user/join.html')
+class Register(APIView):
+    permission_classes = [AllowAny]
 
     def post(self, request):
-        password = request.data.get('password')
-        email = request.data.get('email')
+        #4개 받아오기
         name = request.data.get('name')
-
-        if CustomUser.objects.filter(email=email).exists() :
-            return Response(status=400, data=dict(message='해당 이메일 주소로 이미 가입된 계정이 존재합니다.'))
-        CustomUser.objects.create(password=make_password(password),
-                            email=email,
-                            name=name)
-
-        return Response(status=200, data=dict(message="회원가입 성공했습니다. 로그인 해주세요."))
-
-class UserLogout(View):
-    def get(self, request):
-        auth_logout(request)
-        return redirect('/login')
-    def post(self, request):
-        auth_logout(request)
-        return redirect('/login')
-    
+        email = request.data.get('email')
+        password = request.data.get('password')
+        verify = request.data.get('verify')
+        if CustomUser.objects.filter(email=email).exists() or password != verify:
+            return Response({
+                'access': False,
+                'error': '이메일이 이미 사용 중이거나 비밀번호가 일치하지 않습니다.'
+            }, status=400)
+        
+        #만약 if문에 걸리지 않으면 랜덤한 토큰으로 생성
+        user = CustomUser.objects.create(
+            name=name,
+            email=email,
+            password=make_password(password),
+            token=secrets.token_urlsafe()
+        )
+        
+        token = get_tokens_for_user(user)
+        
+        chat_rooms = list(user.chatroom_set.values_list('name', flat=True)) if hasattr(user, 'chatroom_set') else []
+        return Response({
+            'token': token['access'],
+            'email': email,
+            'access': True,
+            'chat_rooms': chat_rooms
+        }, status=201)

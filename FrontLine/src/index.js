@@ -15,7 +15,12 @@ import { SnackbarProvider} from "notistack";
 // 사이트 레이아웃 및 기본 컴포넌트 의존성.
 import "./index.css";
 import App from "./App";
+import { AuthManagement } from "./Management";
 
+
+if (localStorage.getItem("token")) {
+  console.log(AuthManagement.login({token: localStorage.getItem("token")}));
+}
 // 기본적인 컨테이너 생성
 const container = document.createElement("div");
 
