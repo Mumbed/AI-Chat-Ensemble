@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { QuestionManagement } from "../../Management";
+import { QuestionManagement } from "../../util/Management";
 
 /**
  * @type {() => React.ReactElement}

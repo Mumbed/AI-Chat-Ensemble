@@ -1,5 +1,5 @@
 // 페이지 이동 처리를 위한 위존성.
-import { AuthManagement } from "../../Management";
+import { AuthManagement } from "../../util/Management";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -83,10 +83,8 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const submit = async e => {
     e.preventDefault();
-    const status = await AuthManagement.login({
-      email: e.target[1].value,
-      password: e.target[2].value
-    })
+    const [email, password] = [e.target[1].value, e.target[2].value];
+    const status = await AuthManagement.login(email, password)
     status == true ? navigate("/main") : enqueueSnackbar(status, { 
       variant: 'error',
     })

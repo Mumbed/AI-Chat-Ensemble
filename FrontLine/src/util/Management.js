@@ -1,5 +1,6 @@
 // 서버 연결을 위한 의존성
 import axios from "axios";
+import { axiosInstance } from "./axiosInstance";
 
 /**
  * @description 인증 처리 클래스.
@@ -10,13 +11,10 @@ class AuthManagement {
     static #rooms = null;
 
     static makeRoom = async () => {
-        /**
-         * const { data } = await axios.post(process.env.REACT_APP_BACKEND, {
-         *      roomid: `r${Math.random().toString(16).slice(2)}`
-         * });
-         * this.#chatrooms = data.rooms;
-         */
-        this.#rooms = [`r${Math.random().toString(16).slice(2)}`];
+        const response = await axiosInstance.post(`${process.env.REACT_APP_BACKEND}/createRoom/`, {
+            token: JSON.parse(localStorage.getItem("tokens")).access
+        })
+        console.log(response)
         return this.#rooms;
     }
 
@@ -24,39 +22,57 @@ class AuthManagement {
      * @type {(email: string, password: string, token: string) => Promise<Boolean | String>}
      * @description 로그인 시도. 성공하면 true, 실패하면 사유를 담은 문자열을 반환.
      */
-    static login = async ({email, password, token}) => {
-        if (this.isLogined) return "이미 로그인 되어 있습니다."
+    static login = async (email, password) => {
         try {
-            const data = await axios.post(process.env.REACT_APP_BACKEND, {
-                email: email,
-                password: password,
-                token: token
-            });
-            this.#isLogined = data.data.access;
-            //this.#rooms = data.data.chat_rooms;
-            localStorage.setItem("token", data.data.token);
-            return true;
-        } catch (e) {
-            return e.response.status == 400 ? e.response.data.error : "로그인 서버에 연결할 수 없습니다."
+          const response = await axiosInstance.post('/login/', { 
+            email, 
+            password 
+        });
+          if (response.data.tokens) {
+            localStorage.setItem('tokens', JSON.stringify(response.data.tokens));
+            this.#isLogined = true;
+            return response.data;
+          }
+        } catch (error) {
+          console.error("Login Error", error.response.data);
+          throw error;
+        }
+    };
+
+    static logout = () => {
+        localStorage.removeItem("tokens");
+        this.#isLogined = false;
+        this.#rooms = null;
+    }
+
+    static init = () => {
+        if (localStorage.getItem("tokens")) {
+            this.#isLogined = true;
         }
     }
 
     /**
-     * @type {(form: FormData) => Promise<Boolean | String>}
+     * @type {(name: string, email: string, password: string. verify: string) => Promise<Boolean | String>}
      * @description 회원가입 시도. 성공하면 true, 실패하면 사유를 담은 문자열을 반환.
      */
-    static regist = async form => {
-        if (this.isLogined) return "이미 로그인 되어 있습니다."
+    static register = async (name, email, password, verify) => {
         try {
-            const data = await axios.post(`${process.env.REACT_APP_BACKEND}register/`, form);
-            this.#isLogined = data.data.access;
-            this.#rooms = data.data.chat_rooms;
-            localStorage.setItem("token", data.data.token);
-            return true;
-        } catch (e) {
-            return e.response.status == 400 ? e.response.data.error : "로그인 서버에 연결할 수 없습니다.";
+          const response = await axiosInstance.post('/register/', {
+            name,
+            email,
+            password,
+            verify
+          });
+          if (response.data.tokens) {
+            localStorage.setItem('tokens', JSON.stringify(response.data.tokens));
+            this.#isLogined = true;
+            return response.data;
+          }
+        } catch (error) {
+          console.error("Registration Error", error);
+          throw error;
         }
-    }
+      };
 
      /**
      * @type {() => Promise<void>}
