@@ -3,19 +3,39 @@ import axios from "axios";
 import { axiosInstance } from "./axiosInstance";
 
 /**
+ * @description 데이터 처리 클래스.
+ */
+class DBManagement {
+    static #rooms;
+
+    static createRoom = async () => {
+        try {
+            const data = await axiosInstance.post(`${process.env.REACT_APP_BACKEND}/createRoom/`, {
+                token: JSON.parse(localStorage.getItem("tokens")).access
+            })
+            this.#rooms.push(data.data);
+            console.log(this.#rooms)
+        } catch(e) { 
+            console.log(e)
+         }
+        return this.#rooms;
+    }
+    static get rooms() {
+        return JSON.parse(JSON.stringify(this.#rooms));
+    }
+    static init() {
+        this.#rooms = [];
+    }
+}
+
+/**
  * @description 인증 처리 클래스.
  */
 class AuthManagement {
     static #isLogined;
-    // 현재 로그인 된 유저가 소유한 채팅방 목록.
-    static #rooms = null;
 
     static makeRoom = async () => {
-        const response = await axiosInstance.post(`${process.env.REACT_APP_BACKEND}/createRoom/`, {
-            token: JSON.parse(localStorage.getItem("tokens")).access
-        })
-        console.log(response)
-        return this.#rooms;
+        
     }
 
     /**
@@ -42,7 +62,6 @@ class AuthManagement {
     static logout = () => {
         localStorage.removeItem("tokens");
         this.#isLogined = false;
-        this.#rooms = null;
     }
 
     static init = () => {
@@ -89,10 +108,6 @@ class AuthManagement {
      */
     static get isLogined() {
         return this.#isLogined;
-    }
-
-    static get rooms() {
-        return JSON.parse(JSON.stringify(this.#rooms));
     }
 }
 /**
@@ -175,4 +190,4 @@ class QuestionManagement {
     }
 }
 
-export { AuthManagement, QuestionManagement }
+export { AuthManagement, DBManagement, QuestionManagement }
