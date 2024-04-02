@@ -32,6 +32,7 @@ class DBManagement {
  * @description 인증 처리 클래스.
  */
 class AuthManagement {
+    static #token;
     static #isLogined;
 
     static makeRoom = async () => {
@@ -39,8 +40,8 @@ class AuthManagement {
     }
 
     /**
-     * @type {(email: string, password: string, token: string) => Promise<Boolean | String>}
-     * @description 로그인 시도. 성공하면 true, 실패하면 사유를 담은 문자열을 반환.
+     * @type {(email: string, password: string) => Promise<Void>}
+     * @description 로그인 시도.
      */
     static login = async (email, password) => {
         try {
@@ -50,17 +51,18 @@ class AuthManagement {
         });
           if (response.data.tokens) {
             localStorage.setItem('tokens', JSON.stringify(response.data.tokens));
+            this.#token = response.data.token;
             this.#isLogined = true;
             return response.data;
           }
         } catch (error) {
           console.error("Login Error", error.response.data);
-          throw error;
         }
     };
 
     static logout = () => {
         localStorage.removeItem("tokens");
+        this.#token = null;
         this.#isLogined = false;
     }
 
@@ -71,8 +73,8 @@ class AuthManagement {
     }
 
     /**
-     * @type {(name: string, email: string, password: string. verify: string) => Promise<Boolean | String>}
-     * @description 회원가입 시도. 성공하면 true, 실패하면 사유를 담은 문자열을 반환.
+     * @type {(name: string, email: string, password: string, verify: string) => Promise<Void>}
+     * @description 회원가입 시도.
      */
     static register = async (name, email, password, verify) => {
         try {
@@ -84,23 +86,13 @@ class AuthManagement {
           });
           if (response.data.tokens) {
             localStorage.setItem('tokens', JSON.stringify(response.data.tokens));
+            this.#token = response.data.token;
             this.#isLogined = true;
-            return response.data;
           }
         } catch (error) {
           console.error("Registration Error", error);
-          throw error;
         }
-      };
-
-     /**
-     * @type {() => Promise<void>}
-     * @description 현재 사용자의 로그인 정보를 삭제함.
-     */
-     static logout = async  () => {
-        await axios.post(`${process.env.REACT_APP_BACKEND}/logout`)
-        return false;
-    }
+    };
 
     /**
      * @description 현재 유저가 로그인 되어 있는지의 여부를 반환.
@@ -108,6 +100,9 @@ class AuthManagement {
      */
     static get isLogined() {
         return this.#isLogined;
+    }
+    static get token() {
+        JSON.parse(JSON.stringify(this.#token))
     }
 }
 /**

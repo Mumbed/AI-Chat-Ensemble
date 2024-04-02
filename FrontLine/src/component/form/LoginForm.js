@@ -84,8 +84,9 @@ export default function LoginForm() {
   const submit = async e => {
     e.preventDefault();
     const [email, password] = [e.target[1].value, e.target[2].value];
-    const status = await AuthManagement.login(email, password)
-    status == true ? navigate("/main") : enqueueSnackbar(status, { 
+    await AuthManagement.login(email, password)
+    if (AuthManagement.isLogined) navigate("/question");
+    else enqueueSnackbar("이메일이나 비밀번호가 일치하지 않습니다.", { 
       variant: 'error',
     })
   }

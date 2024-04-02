@@ -66,7 +66,11 @@ export default function RegisterForm() {
   const submit = async e => {
     e.preventDefault();
     const [name, email, password, verify] = [e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value]
-    const status = await AuthManagement.register(name, email, password, verify)
+    await AuthManagement.register(name, email, password, verify);
+    if (AuthManagement.isLogined) navigate("/question");
+    else enqueueSnackbar("이미 있는 계정이거나 비밀번호가 일치하지 않습니다.", { 
+      variant: 'error',
+    })
   }
 
   // 컴포넌트 반환
