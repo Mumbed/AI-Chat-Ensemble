@@ -7,7 +7,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 
 // 로그인 정보 동기화를 위한 의존성.
-null
+import { AuthManagement } from "./util/Management";
 
 // 페이지 아래 스낵바를 구현하기 위한 의존성
 import { SnackbarProvider} from "notistack";
@@ -15,6 +15,8 @@ import { SnackbarProvider} from "notistack";
 // 사이트 레이아웃 및 기본 컴포넌트 의존성.
 import "./index.css";
 import App from "./App";
+
+AuthManagement.init();
 
 // 기본적인 컨테이너 생성
 const container = document.createElement("div");

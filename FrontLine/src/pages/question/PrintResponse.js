@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { QuestionManagement } from "../../Management";
+import { QuestionManagement } from "../../util/Management";
 import { ProtecterX, SpliterX } from "../../component/Container/XContainer";
 import { ResponseBox } from "../../component/Container/BoxContainer";
 

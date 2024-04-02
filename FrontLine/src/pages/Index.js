@@ -2,6 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import { ButtonX, SpliterX } from "../component/Container/XContainer";
 import { ChatGPTExample, CopliotExample, GeminiExample } from "../component/Container/ExampleContainer";
+import { AuthManagement } from "../util/Management";
 
 function Introduction() {
   // 컴포넌트 처리
@@ -11,6 +12,7 @@ function Introduction() {
   return (
     <>
       <h1>ACE를 소개합니다.</h1>
+      <input type="button" onClick={() => AuthManagement.logout()}></input>
       <SpliterX length="1">
         <img src="img/dog_index.png"></img>
         <div>

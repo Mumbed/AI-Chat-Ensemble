@@ -1,5 +1,5 @@
 // 페이지 이동 처리를 위한 위존성.
-import { AuthManagement } from "../../Management";
+import { AuthManagement } from "../../util/Management";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -31,7 +31,7 @@ function RegisterFormBody() {
       <InputX name="name" placeholder="Enter your name."></InputX>
       <InputX name="email" placeholder="Enter your name."></InputX>
       <InputX name="password" placeholder="Enter your name."></InputX>
-      <InputX name="check password" placeholder="Enter your name."></InputX>
+      <InputX name="verify password" placeholder="Enter your name."></InputX>
       <ButtonX text="회원가입" canSubmit={true}></ButtonX>
     </>
   )
@@ -65,10 +65,8 @@ export default function RegisterForm() {
   const navigate = useNavigate();
   const submit = async e => {
     e.preventDefault();
-    const status = await AuthManagement.regist(new FormData(e.target))
-    status == true ? navigate("/main") : enqueueSnackbar(status, { 
-      variant: 'error',
-    })
+    const [name, email, password, verify] = [e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value]
+    const status = await AuthManagement.register(name, email, password, verify)
   }
 
   // 컴포넌트 반환

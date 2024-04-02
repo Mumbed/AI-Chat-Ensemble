@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 // 부분 컴포넌트 의존성.
 import { NoticeBox } from "../../component/Container/BoxContainer";
 import { ProtecterX } from "../../component/Container/XContainer";
-import { AuthManagement, QuestionManagement } from "../../Management";
+import { AuthManagement, QuestionManagement } from "../../util/Management";
 import { useEffect } from "react";
 import QuestionForm from "../../component/form/QuestionForm";
 

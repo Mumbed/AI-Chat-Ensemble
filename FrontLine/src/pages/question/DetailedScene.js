@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom"
 
 // 페이지 이동 처리를 의한 위존성.
-import { AuthManagement, QuestionManagement } from "../../Management";
+import { AuthManagement, QuestionManagement } from "../../util/Management";
 
 // 부분 컴포넌트 의존성.
 import { ProtecterX } from "../../component/Container/XContainer"
