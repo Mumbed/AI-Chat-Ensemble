@@ -36,39 +36,6 @@ class AuthManagement {
     static #isLogined;
 
     /**
-     * @type {(email: string, password: string) => Promise<Void>}
-     * @description 로그인 시도.
-     */
-    static login = async (email, password) => {
-        try {
-          const response = await axiosInstance.post('/login/', { 
-            email, 
-            password 
-        });
-          if (response.data.tokens) {
-            localStorage.setItem('tokens', JSON.stringify(response.data.tokens));
-            this.#token = response.data.token;
-            this.#isLogined = true;
-            return response.data;
-          }
-        } catch (error) {
-          console.error("Login Error", error.response.data);
-        }
-    };
-
-    static logout = () => {
-        localStorage.removeItem("tokens");
-        this.#token = null;
-        this.#isLogined = false;
-    }
-
-    static init = () => {
-        if (localStorage.getItem("tokens")) {
-            this.#isLogined = true;
-        }
-    }
-
-    /**
      * @type {(name: string, email: string, password: string, verify: string) => Promise<Void>}
      * @description 회원가입 시도.
      */
@@ -89,6 +56,36 @@ class AuthManagement {
           console.error("Registration Error", error);
         }
     };
+    /**
+     * @type {(email: string, password: string) => Promise<Void>}
+     * @description 로그인 시도.
+     */
+    static login = async (email, password) => {
+        try {
+          const response = await axiosInstance.post('/login/', { 
+            email, 
+            password 
+        });
+          if (response.data.tokens) {
+            localStorage.setItem('tokens', JSON.stringify(response.data.tokens));
+            this.#token = response.data.token;
+            this.#isLogined = true;
+            return response.data;
+          }
+        } catch (error) {
+          console.error("Login Error", error.response.data);
+        }
+    };
+    static logout = () => {
+        localStorage.removeItem("tokens");
+        this.#token = null;
+        this.#isLogined = false;
+    }
+    static init = () => {
+        if (localStorage.getItem("tokens")) {
+            this.#isLogined = true;
+        }
+    }
 
     /**
      * @description 현재 유저가 로그인 되어 있는지의 여부를 반환.
