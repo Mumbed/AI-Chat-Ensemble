@@ -35,10 +35,6 @@ class AuthManagement {
     static #token;
     static #isLogined;
 
-    static makeRoom = async () => {
-        
-    }
-
     /**
      * @type {(email: string, password: string) => Promise<Void>}
      * @description 로그인 시도.
