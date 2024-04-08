@@ -1,0 +1,60 @@
+.footer-container {
+    position: relative;
+    width: 1176px;
+    height: 873px;
+    top: 300px;
+}
+
+.footer-text-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: calc(100% - 93.59%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    font-size: 48px;
+    line-height: 56px;
+    font-weight: bold;
+    color: #fefefe;
+    text-align: center;
+}
+
+.footer-background-image {
+    position: absolute;
+    left: 15.48%;
+    right: 23.3%;
+    top: 17.53%;
+    bottom: 0;
+    width: 720px;
+    height: 720px;
+}
+
+.footer-button-container {
+    position: absolute;
+    left: 33.84%;
+    right: 35.29%;
+    top: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    background-color: #6236f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.footer-button {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 20px;
+}

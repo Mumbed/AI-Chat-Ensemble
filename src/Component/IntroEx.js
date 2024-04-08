@@ -16,7 +16,6 @@ const IntroEx = () => {
         <div className="heading">무엇이든 질문해주세요.</div>
         <div className="sub-heading">GPT, gemini등 다양한 대화형 AI에게 물어볼게요.</div>
       </div>
-      {/* 이 곳에 삽입*/}
       <Question />
       <div className="card-container">
         {/* Chat GPT Card */}

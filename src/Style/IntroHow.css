@@ -1,0 +1,138 @@
+/* IntroHow.css */
+
+.intro-how-container {
+    width: 1240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 40px;
+    padding: 32px;
+    border-radius: 16px;
+  }
+  
+  .intro-text-container {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 24px;
+  }
+  
+  .intro-text {
+    align-self: stretch;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 48px;
+    line-height: 56px;
+    font-weight: bold;
+    color: #fefefe;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #6c7275;
+  }
+  
+  .cards-container {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 24px;
+  }
+  
+  .unique-card {
+    width: 576px;
+    height: 553px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 40px;
+    background: #232627;
+    border: 1px solid #343839;
+    border-radius: 24px;
+  }
+  .unique-card:hover {
+    border: 1px solid black;
+    transform: scale(1.05);
+  }
+  
+  .unique-card:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+  }
+  
+  .card-content {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 12px;
+  }
+  
+  .avatar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+  }
+  
+  .avatar img {
+    border-radius: 50%;
+  }
+  
+  .avatar-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 4px;
+  }
+  
+  .name {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #fefefe;
+  }
+  
+  .username {
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #6c7275;
+  }
+  
+  .text {
+    align-self: stretch;
+  }
+  
+  .text-title {
+    font-size: 28px;
+    line-height: 40px;
+    font-weight: bold;
+    color: #fefefe;
+  }
+  
+  .text-body {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #fff;
+  }
+  
+  .text-body span {
+    text-decoration: underline;
+  }
+  
