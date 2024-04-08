@@ -1,0 +1,123 @@
+.container {
+    width: 1358px;
+    /* display: flex; */
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+    gap: 40px;
+    padding: 32px;
+    border-radius: 16px;
+    margin-top: 150px;
+  }
+  
+  .heading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 24px;
+  }
+  
+  .heading {
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: -0.03em;
+    font-weight: bold;
+    color: #fefefe;
+    text-align: center;
+  }
+  
+  .sub-heading {
+    font-size: 18px;
+    line-height: 32px;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    color: #6c7275;
+    text-align: center;
+  }
+  
+  .question-text {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    color: #fefefe;
+    white-space: nowrap;
+
+  }
+  .question-container {
+    width: 408px;
+    height: 70px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    background-color: #3e90f0;
+    opacity: var(--opacity, 1);
+  }
+  
+  .card-container {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    gap: 24px;
+  }
+  
+  .card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 40px;
+    background-color: #232627;
+    border: 1px solid #343839;
+    border-radius: 24px;
+  }
+  
+  .card-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 12px;
+  }
+  
+  .avatar {
+    border-radius: 50%;
+  }
+  
+  .username {
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    font-weight: medium;
+    color: #fefefe;
+  }
+  
+  .handle {
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: -0.03em;
+    font-weight: medium;
+    color: #6c7275;
+  }
+  
+  .card-title {
+    font-size: 28px;
+    line-height: 40px;
+    letter-spacing: -0.02em;
+    font-weight: bold;
+    color: #f3f5f7;
+  }
+  
+  .card-content {
+    flex: 1;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.03em;
+    font-weight: medium;
+    color: #fff;
+  }
+  

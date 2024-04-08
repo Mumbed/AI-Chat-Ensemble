@@ -1,0 +1,96 @@
+/* Header.css */
+.header-container {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    padding: 0 24px;
+    background-color: #262728;
+    overflow: hidden;
+    
+    position: fixed; /* 헤더를 고정 위치에 배치 */
+    top: 0; /* 뷰포트의 상단에 위치시킴 */
+    left: 0; /* 뷰포트의 왼쪽에 위치시킴 */
+    z-index: 1000; /* 헤더가 다른 요소들 위에 위치하도록 z-index 값을 높임 */
+    box-sizing: border-box; /* 패딩과 테두리가 너비에 포함되도록 설정 */
+  }
+  
+  .nav-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .main-nav {
+    width: 1200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 46px;
+  }
+  
+  .nav-item-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 32px;
+    overflow: hidden;
+  }
+  
+  .nav-item {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+    padding: 24px 12px;
+  }
+  
+  .nav-text {
+    font-size: 18px;
+    line-height: 32px;
+    letter-spacing: -0.03em;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #fefefe;
+    white-space: nowrap;
+  }
+  
+  .login-section {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 22px;
+  }
+  
+  .login-text, .signup-text {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+  
+  .signup-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 25px;
+    background-color: #6236f5;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .signup-text {
+    color: #fffefeef;
+  }
+  
