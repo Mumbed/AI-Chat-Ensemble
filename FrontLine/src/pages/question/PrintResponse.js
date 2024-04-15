@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { QuestionManagement } from "../../util/Management";
 import { ProtecterX, SpliterX } from "../../component/Container/XContainer";
 import { ResponseBox } from "../../component/Container/BoxContainer";
+import { useHistory } from 'react-router-dom';  // Import useHistory for programmatic navigation
 
 export default function PrintResponse() {
   const { pathname } = useLocation();

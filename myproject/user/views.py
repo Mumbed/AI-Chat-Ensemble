@@ -6,6 +6,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.hashers import make_password
 from uuid import uuid4
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -13,7 +16,15 @@ def get_tokens_for_user(user):
         'refresh': str(refresh),
         'access': str(refresh.access_token),
     }
-
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_info(request):
+    # 인증된 사용자의 정보를 반환합니다.
+    user = request.user
+    return Response({
+        'name': user.name,
+        'email': user.email
+    })
 class Login(APIView):
     permission_classes = [AllowAny]
 
@@ -30,7 +41,10 @@ class Login(APIView):
         return Response({
             'tokens': tokens,
             'access': True,
-            'email': user.email,
+            'user': {
+                'email': user.email,
+                'name': user.name  # 예시로 이름도 추가합니다.
+            }
         }, status=200)
         
 

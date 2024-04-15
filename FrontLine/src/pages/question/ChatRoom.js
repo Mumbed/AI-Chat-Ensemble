@@ -31,15 +31,11 @@ const ChatRoom = ({ chatRoomId }) => {
                 return;
             }
 
-            const userResponse = await axios.get('http://localhost:8000/get_user_info/', {
+            const response = await axios.get('/api/user', {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
-            setUser(userResponse.data);
-
-            // Fetch chats similarly if needed
-            // Example: const chatsResponse = ...
-            // setGptChats(chatsResponse.data.gptChats);
-            // setGeminiChats(chatsResponse.data.geminiChats);
+            setUser(response.data);
+            // Fetch chats in a similar way, ensuring you use the token if needed
         } catch (error) {
             console.error("Error fetching user data:", error);
             navigate('/login');  // Redirect or handle errors appropriately
@@ -48,11 +44,16 @@ const ChatRoom = ({ chatRoomId }) => {
 
     const handleSend = async (e) => {
         e.preventDefault();
-        const tokens = localStorage.getItem('tokens');
-        const parsedTokens = JSON.parse(tokens);
-        const accessToken = parsedTokens.access;
-
         try {
+            const tokens = localStorage.getItem('tokens');
+            if (!tokens) {
+                console.error('Token object is missing in localStorage');
+                return;
+            }
+
+            const parsedTokens = JSON.parse(tokens);
+            const accessToken = parsedTokens.access;
+
             await axios.post(`/chat/${chatRoomId}`, {
                 question: inputValue,
                 source
@@ -68,19 +69,19 @@ const ChatRoom = ({ chatRoomId }) => {
 
     return (
         <div className="container">
-            <h1>Ask anything</h1>
+            <h1>물어보세요</h1>
             {user && (
                 <>
-                    <div>Email: {user.email}</div>
+                    <div>{user.email}</div>
                     <button onClick={() => navigate('/logout')}>Logout</button>
                 </>
             )}
             
-            <Link to="/create_chat">Create new chat room</Link>
-            <Link to="/">Back to home</Link>
+            <Link to="/create_chat">새로운 채팅방 생성</Link>
+            <Link to="/">메인 페이지로 이동</Link>
             <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '60px', backgroundColor: '#FAFAFA' }}>
-                <ChatList chats={gptChats} source="gpt" onSubmit={handleSend} onChange={(e) => setInputValue(e.target.value)} inputValue={inputValue} />
-                <ChatList chats={geminiChats} source="gemini" onSubmit={handleSend} onChange={(e) => setInputValue(e.target.value)} inputValue={inputValue} />
+                <ChatList chats={gptChats} source="gpt" onSubmit={handleSend} onChange={setInputValue} inputValue={inputValue} />
+                <ChatList chats={geminiChats} source="gemini" onSubmit={handleSend} onChange={setInputValue} inputValue={inputValue} />
             </div>
         </div>
     );

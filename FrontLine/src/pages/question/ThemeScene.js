@@ -7,6 +7,7 @@ import { ProtecterX } from "../../component/Container/XContainer";
 import { AuthManagement, QuestionManagement } from "../../util/Management";
 import { useEffect } from "react";
 import QuestionForm from "../../component/form/QuestionForm";
+import { useNavigate } from 'react-router-dom';
 
 /**
  * @description 주제 선택 창

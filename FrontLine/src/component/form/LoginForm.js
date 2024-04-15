@@ -1,22 +1,15 @@
-// 페이지 이동 처리를 위한 위존성.
+// 필요한 모듈 및 컴포넌트 import
 import { AuthManagement } from "../../util/Management";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-// 하단 스낵바 출력을 위한 의존성.
 import { useSnackbar } from "notistack";
-
-// 부분 컴포넌트 의존성.
 import { ButtonX, InputX } from "../Container/XContainer";
 
-/**
- * @type {() => React.ReactElement}
- */
+// 로그인 폼의 헤더 컴포넌트
 function LoginFormHeader() {
-  // 컴포넌트 반환
   return (
     <>
-      <legend style ={{
+      <legend style={{
         top: "40px",
         width: "100%",
         color: "slateblue",
@@ -35,15 +28,12 @@ function LoginFormHeader() {
   )
 }
 
-/**
- * @type {() => React.ReactElement}
- */
+// 로그인 폼의 바디 컴포넌트
 function LoginFormBody() {
-  // 컴포넌트 반환
   return (
     <>
-      <InputX name="email" placeholder="Enter your email."></InputX>
-      <InputX name="password" placeholder="Enter your password."></InputX>
+      <InputX name="email" placeholder="Enter your email" type="email"></InputX>
+      <InputX name="password" placeholder="Enter your password" type="password"></InputX>
       <Link style={{
         fontSize: "14px",
         flexDirection: "row-reverse",
@@ -55,49 +45,43 @@ function LoginFormBody() {
   )
 }
 
-/**
- * @type {() => React.ReactElement}
- */
+// 로그인 폼의 푸터 컴포넌트
 function LoginFormFooter() {
-  // 컴포넌트 반환
   return (
     <span style={{
       display: "block",
       width: "100%",
-      color: "rgba(255, 255, 255, 0.6)",
       textAlign: "center",
       marginTop: "10px"
-    }}>처음이신가요? <Link style={{
-      display: "inline"
-    }} to="/register">회원가입</Link>하기</span>
+    }}>처음이신가요? <Link to="/register">회원가입</Link>하기</span>
   )
 }
 
-/**
- * @description 로그인 폼 컴포넌트.
- * @type {() => React.ReactElement}
- */
+// 로그인 폼 메인 컴포넌트
 export default function LoginForm() {
-  // 컴포넌트 처리
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const submit = async e => {
+
+  const submit = async (e) => {
     e.preventDefault();
-    const [email, password] = [e.target[1].value, e.target[2].value];
-    await AuthManagement.login(email, password)
-    if (AuthManagement.isLogined) navigate("/question");
-    else enqueueSnackbar("이메일이나 비밀번호가 일치하지 않습니다.", { 
-      variant: 'error',
-    })
+    const formData = new FormData(e.target);
+    const email = formData.get('email');
+    const password = formData.get('password');
+
+    const loginSuccess = await AuthManagement.login(email, password);
+    if (loginSuccess) {
+      navigate("/question");
+    } else {
+      enqueueSnackbar("이메일이나 비밀번호가 일치하지 않습니다.", { variant: 'error' });
+    }
   }
 
-  // 컴포넌트 반환
   return (
     <form onSubmit={submit}>
-      <fieldset> 
-        <LoginFormHeader></LoginFormHeader>
-        <LoginFormBody></LoginFormBody>
-        <LoginFormFooter></LoginFormFooter>
+      <fieldset>
+        <LoginFormHeader />
+        <LoginFormBody />
+        <LoginFormFooter />
       </fieldset>
     </form>
   )

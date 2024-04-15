@@ -16,6 +16,9 @@ import ThemeScene from "./pages/question/ThemeScene";
 import DetailedScene from "./pages/question/DetailedScene";
 import SelectRoom from "./pages/question/SelectRoom";
 import PrintResponse from "./pages/question/PrintResponse";
+import Chat from "./pages/question/Chat";
+import ChatRoom from "./pages/question/ChatRoom";
+
 
 export default function App() {
   return (
@@ -31,6 +34,8 @@ export default function App() {
           <Route path="/question/:roomid/main" Component={PrintResponse}></Route>
           <Route path="/question/:roomid/:topic" Component={DetailedScene}></Route>
           <Route path="/question" Component={SelectRoom}></Route>
+          <Route path="/createroom" Component={Chat}></Route>
+          <Route path="/chat/:chatRoomId" element={<ChatRoom />} />
 
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />

@@ -8,6 +8,7 @@ import { AuthManagement, QuestionManagement } from "../../util/Management";
 import { ProtecterX } from "../../component/Container/XContainer"
 import { useEffect, useState } from "react";
 import QuestionForm from "../../component/form/QuestionForm";
+import { useHistory } from 'react-router-dom';  // Import useHistory for programmatic navigation
 
 export default function DetailedScene() {
   // 컴포넌트 처리
