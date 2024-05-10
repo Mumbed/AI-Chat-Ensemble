@@ -1,108 +1,142 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 
-const ChatRoom = ({ chatRoomId }) => {
+const ChatRoom = () => {
     const [user, setUser] = useState(null);
-    const [gptChats, setGptChats] = useState([]);
-    const [geminiChats, setGeminiChats] = useState([]);
-    const [inputValue, setInputValue] = useState('');
-    const [source, setSource] = useState('gpt'); // Assuming default source as 'gpt'
+    const [gptInputValue, setGptInputValue] = useState('');
+    const [geminiInputValue, setGeminiInputValue] = useState('');
+    const [chats, setChats] = useState([]);
+    const [chatRooms, setChatRooms] = useState([]);
     const navigate = useNavigate();
+    const { chatRoomId } = useParams();
 
     useEffect(() => {
-        fetchUserAndChats();
+        fetchUserAndChatRooms();
+        fetchChatRooms(); // Fetch chat rooms when the component mounts
+        if (chatRoomId) {
+            fetchChatHistory(chatRoomId);
+        }
     }, [chatRoomId]);
 
-    const fetchUserAndChats = async () => {
+    const fetchUserAndChatRooms = async () => {
+        const tokens = localStorage.getItem('tokens');
+        if (!tokens) {
+            console.error('No tokens found. Redirecting to login.');
+            navigate('/login');
+            return;
+        }
+        const accessToken = JSON.parse(tokens).access;
         try {
-            const tokens = localStorage.getItem('tokens');
-            if (!tokens) {
-                console.error('Token object is missing in localStorage');
-                navigate('/login');  // Redirect to login if no token found
-                return;
-            }
-
-            const parsedTokens = JSON.parse(tokens);
-            const accessToken = parsedTokens.access;
-            if (!accessToken) {
-                console.error('Access token is missing in localStorage');
-                navigate('/login');  // Redirect to login if no access token found
-                return;
-            }
-
-            const response = await axios.get('/api/user', {
+            const userResponse = await axios.get('http://localhost:8000/get_user_info/', {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
-            setUser(response.data);
-            // Fetch chats in a similar way, ensuring you use the token if needed
+            setUser(userResponse.data);
         } catch (error) {
-            console.error("Error fetching user data:", error);
-            navigate('/login');  // Redirect or handle errors appropriately
+            console.error('Failed to fetch user information:', error);
+            if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                navigate('/login');
+            }
         }
     };
 
-    const handleSend = async (e) => {
-        e.preventDefault();
+    const fetchChatRooms = async () => {
+        const tokens = localStorage.getItem('tokens');
+        if (!tokens) {
+            console.log('No tokens found. User must log in.');
+            navigate('/login'); // Redirect or handle appropriately
+            return; // Exit the function if no tokens found
+        }
+        const accessToken = JSON.parse(tokens).access;
+    
         try {
-            const tokens = localStorage.getItem('tokens');
-            if (!tokens) {
-                console.error('Token object is missing in localStorage');
-                return;
-            }
+            const response = await axios.get('http://localhost:8000/list_chat_rooms/', {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            setChatRooms(response.data);
+        } catch (error) {
+            console.error('Failed to fetch chat rooms:', error);
+        }
+    };
 
-            const parsedTokens = JSON.parse(tokens);
-            const accessToken = parsedTokens.access;
+    const fetchChatHistory = async (roomId) => {
+        const accessToken = JSON.parse(localStorage.getItem('tokens')).access;
+        try {
+            const response = await axios.get(`http://localhost:8000/fetch_chat_history/${roomId}`, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            setChats(response.data);
+        } catch (error) {
+            console.error('Failed to fetch chat history:', error);
+        }
+    };
 
-            await axios.post(`/chat/${chatRoomId}`, {
+    const handleSendMessage = async (source, inputValue) => {
+        if (!inputValue.trim()) return;
+        const accessToken = JSON.parse(localStorage.getItem('tokens')).access;
+        try {
+            const response = await axios.post(`http://localhost:8000/chat/${chatRoomId}/`, {
                 question: inputValue,
                 source
             }, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
-            setInputValue(''); // Clear input after sending
-            fetchUserAndChats();  // Refresh chat after sending
+            setChats([...chats, { question: inputValue, response: response.data.response, source }]);
+            source === 'gpt' ? setGptInputValue('') : setGeminiInputValue('');
         } catch (error) {
             console.error("Failed to send message:", error);
         }
     };
 
     return (
-        <div className="container">
-            <h1>물어보세요</h1>
-            {user && (
-                <>
-                    <div>{user.email}</div>
-                    <button onClick={() => navigate('/logout')}>Logout</button>
-                </>
-            )}
-            
-            <Link to="/create_chat">새로운 채팅방 생성</Link>
-            <Link to="/">메인 페이지로 이동</Link>
-            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '60px', backgroundColor: '#FAFAFA' }}>
-                <ChatList chats={gptChats} source="gpt" onSubmit={handleSend} onChange={setInputValue} inputValue={inputValue} />
-                <ChatList chats={geminiChats} source="gemini" onSubmit={handleSend} onChange={setInputValue} inputValue={inputValue} />
+        <div className="container" style={{ display: 'flex', flexDirection: 'row' }}>
+            <div style={{ width: '20%', padding: '10px', borderRight: '1px solid #ccc' }}>
+    <h3>Chat Rooms</h3>
+    {chatRooms.map(room => (
+        <div key={room.chat_room_id} onClick={() => navigate(`/chat/${room.chat_room_id}`)} style={{ cursor: 'pointer', padding: '5px' }}>
+            {room.chat_room_id} ({room.messages_count})
+        </div>
+    ))}
+</div>
+            <div style={{ width: '80%', padding: '10px' }}>
+                {user && (
+                    <>
+                        <div>Email: {user.email}</div>
+                        <div>Name: {user.name}</div>
+                        <button onClick={() => navigate('/logout')}>Logout</button>
+                    </>
+                )}
+                <Link to="/createRoom">Create new chat room</Link>
+                <Link to="/">Back to home</Link>
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', paddingTop: '20px', backgroundColor: '#FAFAFA' }}>
+                    {chats.map((chat, index) => (
+                        <div key={index} style={{ marginBottom: '10px', padding: '10px', backgroundColor: '#FFFFFF', borderRadius: '5px', color: '#000000' }}>
+                            <strong>Question ({chat.source.toUpperCase()}):</strong> {chat.question}
+                            <div><strong>Response:</strong> {chat.response}</div>
+                        </div>
+                    ))}
+                    <div>
+                        <input
+                            type="text"
+                            value={gptInputValue}
+                            onChange={(e) => setGptInputValue(e.target.value)}
+                            placeholder="Message to GPT"
+                            style={{ width: 'calc(100% - 20px)', padding: '8px', boxSizing: 'border-box', borderRadius: '5px', border: '1px solid #ccc', color: '#000', marginBottom: '10px' }}
+                        />
+                        <button onClick={() => handleSendMessage('gpt', gptInputValue)}>Send to GPT</button>
+                        <input
+                            type="text"
+                            value={geminiInputValue}
+                            onChange={(e) => setGeminiInputValue(e.target.value)}
+                            placeholder="Message to Gemini"
+                            style={{ width: 'calc(100% - 20px)', padding: '8px', boxSizing: 'border-box', borderRadius: '5px', border: '1px solid #ccc', color: '#000', marginBottom: '10px' }}
+                        />
+                        <button onClick={() => handleSendMessage('gemini', geminiInputValue)}>Send to Gemini</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
 };
-
-const ChatList = ({ chats, source, onSubmit, onChange, inputValue }) => (
-    <div style={{ width: '500px' }}>
-        <div className="chat">
-            {chats.map(chat => (
-                <div key={chat.id} className="message">
-                    <div className="user-message">{chat.question}</div>
-                    <div className="ai-message">{chat.response}</div>
-                </div>
-            ))}
-        </div>
-        <form onSubmit={onSubmit}>
-            <input type="hidden" value={source} />
-            <input type="text" value={inputValue} onChange={onChange} />
-            <button type="submit">Send to {source}</button>
-        </form>
-    </div>
-);
 
 export default ChatRoom;

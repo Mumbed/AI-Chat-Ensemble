@@ -8,9 +8,7 @@ from .views import get_user_info  # get_user_info 함수를 import
 urlpatterns = [
     path('login/', Login.as_view(), name='login'),
     path('register/', Register.as_view(), name='register'),
-    path('createRoom/', CreateRoom.as_view(), name='createRoom'),
     path('get_user_info/', get_user_info, name='get_user_info'),
-
     path('', Login.as_view(), name='login'),
 
 ]

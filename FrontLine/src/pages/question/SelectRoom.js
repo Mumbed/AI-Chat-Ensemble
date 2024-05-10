@@ -72,11 +72,13 @@ const ChatRoom = ({ chatRoomId }) => {
             {user && (
                 <>
                     <div>Email: {user.email}</div>
+                    <div>Name: {user.name}</div>
+
                     <button onClick={() => navigate('/logout')}>Logout</button>
                 </>
             )}
             
-            <Link to="/create_chat">Create new chat room</Link>
+            <Link to="/createRoom">Create new chat room</Link>
             <Link to="/">Back to home</Link>
             <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '60px', backgroundColor: '#FAFAFA' }}>
                 <ChatList chats={gptChats} source="gpt" onSubmit={handleSend} onChange={(e) => setInputValue(e.target.value)} inputValue={inputValue} />

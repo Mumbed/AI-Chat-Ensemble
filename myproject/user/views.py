@@ -74,12 +74,3 @@ class Register(APIView):
             'email': email,
             'access': True,
         }, status=201)
-
-class CreateRoom(APIView):
-    def post(self, request):
-        chat_room_id = uuid4().hex  # Generate a new UUID for the chat room ID
-
-        user_id = request.data.get('token', None)
-        Chat.objects.create(chat_room_id=new_chat_room_id, user_id=user_id)
-
-        return Response(chat_room_id, status=200)
