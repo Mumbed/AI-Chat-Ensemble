@@ -7,7 +7,7 @@ export default function HomeSection2() {
   return (
     // 임시로 Card를 여러번 반복하였음.
     //나중에 map함수를 이용해 코드 반복사용을 줄이도록 최적화가능
-    <div className="flex flex-col justify-center ">
+    <div className="flex flex-col justify-center items-center">
        <h2 className="">AI고민하지 마세요&nbsp;</h2><br/>
        <div className = "flex flex-row justify-center">
       <Card

@@ -1,4 +1,4 @@
-import AboutDummy2 from "@/components/about-dommy2";
+
 import AboutDummy from "@/components/about-dommy";
 import { title } from "@/components/primitives";
 export default function AboutPage() {
