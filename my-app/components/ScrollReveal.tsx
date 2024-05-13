@@ -1,22 +1,21 @@
+"use client";
 import React from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useTransform  } from "framer-motion";
 import { useScroll } from "framer-motion";
 
 const ScrollReveal = () => {
-  const controls = useAnimation();
   const { scrollYProgress } = useScroll();
-
-  controls.start({ opacity: scrollYProgress });
+  const opacity = useTransform(scrollYProgress, [0.5, 1], [0, 1]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={controls}
-      transition={{ duration: 1 }}
-    >
-      <img src="https://nextui.org/images/hero-card.jpeg" alt="Your Image" />
-    </motion.div>
+<motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 0.5 }}
+>
+<h2>Scroll down to 50% to see me!</h2>
+</motion.div>
   );
-};
+}; 
 
 export default ScrollReveal;

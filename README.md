@@ -2,6 +2,7 @@
 
 ```
 npm install @nextui-org/react framer-motion
+npm i react-text-typing-animation
 ```
 
 ### 프로젝트 실행
