@@ -1,9 +1,10 @@
 // 필요한 모듈 및 컴포넌트 import
-import { AuthManagement } from "../../util/Management";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { ButtonX, InputX } from "../Container/XContainer";
+import { Management } from "../../UtilPack";
+import { useState } from "react";
 
 // 로그인 폼의 헤더 컴포넌트
 function LoginFormHeader() {
@@ -59,24 +60,15 @@ function LoginFormFooter() {
 
 // 로그인 폼 메인 컴포넌트
 export default function LoginForm() {
-  const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
 
-  const submit = async (e) => {
+  const submit = async e => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const email = formData.get('email');
-    const password = formData.get('password');
-
-    const loginSuccess = await AuthManagement.login(email, password);
-    if (loginSuccess) {
-      navigate("/question");
-    } else {
-      enqueueSnackbar("이메일이나 비밀번호가 일치하지 않습니다.", { variant: 'error' });
-    }
+    await Management.Auth.login(e.target[0].value, e.target[1].value);
+    setToggle(!toggle);
   }
 
-  return (
+  return Management.Auth.isLogined ? <Navigate to="/"></Navigate> : (
     <form onSubmit={submit}>
       <fieldset>
         <LoginFormHeader />

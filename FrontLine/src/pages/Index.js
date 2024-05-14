@@ -2,7 +2,6 @@
 import { useNavigate } from "react-router-dom";
 import { ButtonX, SpliterX } from "../component/Container/XContainer";
 import { ChatGPTExample, CopliotExample, GeminiExample } from "../component/Container/ExampleContainer";
-import { AuthManagement } from "../util/Management";
 
 function Introduction() {
   // 컴포넌트 처리

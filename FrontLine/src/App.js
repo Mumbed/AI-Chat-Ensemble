@@ -12,10 +12,7 @@ import { HeaderX } from "./component/Container/XContainer";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
-import ThemeScene from "./pages/question/ThemeScene";
-import DetailedScene from "./pages/question/DetailedScene";
 import SelectRoom from "./pages/question/SelectRoom";
-import PrintResponse from "./pages/question/PrintResponse";
 import Chat from "./pages/question/Chat";
 import ChatRoom from "./pages/question/ChatRoom";
 import CreateRoom from "./pages/question/CreateRoom"; // import CreateRoom 컴포넌트 추가
@@ -31,9 +28,6 @@ export default function App() {
         width: "100%"
       }}>
         <Routes>
-        <Route path="/question/:roomid/first" Component={ThemeScene}></Route>
-          <Route path="/question/:roomid/main" Component={PrintResponse}></Route>
-          <Route path="/question/:roomid/:topic" Component={DetailedScene}></Route>
           <Route path="/question" Component={ChatRoom}></Route>
           <Route path="/createRoom" element={<CreateRoom />} />
           <Route path="/chat/:chatRoomId" element={<ChatRoom />} />

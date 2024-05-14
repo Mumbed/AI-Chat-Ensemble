@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // useHistory 대신 useNavigate 사용
 import axios from 'axios';
 

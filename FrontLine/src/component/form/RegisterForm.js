@@ -1,6 +1,5 @@
 // 페이지 이동 처리를 위한 위존성.
-import { AuthManagement } from "../../util/Management";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 // 하단 스낵바 출력을 위한 의존성.
@@ -8,6 +7,8 @@ import { useSnackbar } from "notistack";
 
 // 부분 컴포넌트 의존성.
 import { InputX, ButtonX } from "../Container/XContainer";
+import { useState } from "react";
+import { Management } from "../../UtilPack";
 
 /**
  * @type {() => React.ReactElement}
@@ -61,20 +62,16 @@ function RegisterFormFooter() {
  */
 export default function RegisterForm() {
   // 컴포넌트 처리
-  const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false);
   const submit = async e => {
     e.preventDefault();
     const [name, email, password, verify] = [e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value]
-    await AuthManagement.register(name, email, password, verify);
-    if (AuthManagement.isLogined) navigate("/question");
-    else enqueueSnackbar("이미 있는 계정이거나 비밀번호가 일치하지 않습니다.", { 
-      variant: 'error',
-    })
+    await Management.Auth.regist(name, email, password, verify);
+    setToggle(!toggle);
   }
 
   // 컴포넌트 반환
-  return (
+  return Management.Auth.isLogined ? <Navigate to="/"></Navigate> : (
     <form onSubmit={submit}>
       <fieldset style={{
         background: "none"
