@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 // {/* 이미지가 경로로 적용이 안돼 ㅡㅡ*/}
 import avatar1 from "https://ifh.cc/g/Sb8MWN.png";
-import avatar2 from "../app/imgsrc/Google_PaLM_Logo.png";
+import avatar2 from "@/imgsrc/clova_x.png"
 import avatar3 from "../app/imgsrc/Microsoft_Copilot_2023.png";
 import avatar4 from "../app/imgsrc/claude-icon.png";
 import avatar5 from "../app/imgsrc/clova_x.png";
@@ -23,7 +23,7 @@ export default function HomeSectiontest() {
         [0.5, 1],
         ["-100%", "-40%"]
       );
-    
+  console.log(avatar2)
       
   return (
     <div  className="flex flex-col"  style={{ fontFamily: "Arial, sans-serif" }}>
@@ -45,7 +45,7 @@ export default function HomeSectiontest() {
         <Avatar
           className="w-20 h-20"
           radius="md"
-          src= "https://ifh.cc/g/Sb8MWN.png"
+          src= {avatar2.src}
         />
       </Badge>
       <Badge>
