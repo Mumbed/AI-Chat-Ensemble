@@ -13,7 +13,7 @@ const ChatRoom = () => {
 
     useEffect(() => {
         fetchUserAndChatRooms();
-        fetchChatRooms(); // Fetch chat rooms when the component mounts
+        fetchChatRooms();
         if (chatRoomId) {
             fetchChatHistory(chatRoomId);
         }
@@ -22,7 +22,6 @@ const ChatRoom = () => {
     const fetchUserAndChatRooms = async () => {
         const tokens = localStorage.getItem('tokens');
         if (!tokens) {
-            console.error('No tokens found. Redirecting to login.');
             navigate('/login');
             return;
         }
@@ -43,12 +42,11 @@ const ChatRoom = () => {
     const fetchChatRooms = async () => {
         const tokens = localStorage.getItem('tokens');
         if (!tokens) {
-            console.log('No tokens found. User must log in.');
-            navigate('/login'); // Redirect or handle appropriately
-            return; // Exit the function if no tokens found
+            navigate('/login');
+            return;
         }
         const accessToken = JSON.parse(tokens).access;
-    
+
         try {
             const response = await axios.get('http://localhost:8000/list_chat_rooms/', {
                 headers: { Authorization: `Bearer ${accessToken}` }
@@ -90,14 +88,14 @@ const ChatRoom = () => {
 
     return (
         <div className="container" style={{ display: 'flex', flexDirection: 'row' }}>
-            <div style={{ width: '20%', padding: '10px', borderRight: '1px solid #ccc' }}>
-    <h3>Chat Rooms</h3>
-    {chatRooms.map(room => (
-        <div key={room.chat_room_id} onClick={() => navigate(`/chat/${room.chat_room_id}`)} style={{ cursor: 'pointer', padding: '5px' }}>
-            {room.chat_room_id} ({room.messages_count})
-        </div>
-    ))}
-</div>
+            <div style={{ width: '20%', padding: '10px', borderRight: '1px solid #ccc'}}>
+                <h3>Chat Rooms</h3>
+                {chatRooms.map(room => (
+                    <div key={room.chat_room_id} onClick={() => navigate(`/chat/${room.chat_room_id}`)} style={{ cursor: 'pointer', padding: '5px' }}>
+                        {room.chat_room_id} ({room.messages_count})
+                    </div>
+                ))}
+            </div>
             <div style={{ width: '80%', padding: '10px' }}>
                 {user && (
                     <>
@@ -108,31 +106,35 @@ const ChatRoom = () => {
                 )}
                 <Link to="/createRoom">Create new chat room</Link>
                 <Link to="/">Back to home</Link>
-                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', paddingTop: '20px', backgroundColor: '#FAFAFA' }}>
+                <div className="chat-container" style={{ overflowY: 'auto', maxHeight: '600px', backgroundColor: '#000' }}>
                     {chats.map((chat, index) => (
-                        <div key={index} style={{ marginBottom: '10px', padding: '10px', backgroundColor: '#FFFFFF', borderRadius: '5px', color: '#000000' }}>
-                            <strong>Question ({chat.source.toUpperCase()}):</strong> {chat.question}
-                            <div><strong>Response:</strong> {chat.response}</div>
+                        <div key={index} className="message" style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                            <div className="user-message" style={{ backgroundColor: '#007bff', padding: '8px 12px', borderRadius: '4px', maxWidth: '70%', alignSelf: 'flex-end' }}>
+                                {chat.question}
+                            </div>
+                            <div className="ai-message" style={{ backgroundColor: '#007bff', color: '#fff', padding: '8px 12px', borderRadius: '4px', maxWidth: '70%', alignSelf: 'flex-start' }}>
+                                {chat.response}
+                            </div>
                         </div>
                     ))}
-                    <div>
-                        <input
-                            type="text"
-                            value={gptInputValue}
-                            onChange={(e) => setGptInputValue(e.target.value)}
-                            placeholder="Message to GPT"
-                            style={{ width: 'calc(100% - 20px)', padding: '8px', boxSizing: 'border-box', borderRadius: '5px', border: '1px solid #ccc', color: '#000', marginBottom: '10px' }}
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                    <input
+                        type="text"
+                        value={gptInputValue}
+                        onChange={(e) => setGptInputValue(e.target.value)}
+                        placeholder="Message to GPT"
+                        style={{ width: 'calc(100% - 20px)', padding: '8px', boxSizing: 'border-box', borderRadius: '5px', border: '1px solid #ccc', marginBottom: '10px', color: '#000' }}
                         />
-                        <button onClick={() => handleSendMessage('gpt', gptInputValue)}>Send to GPT</button>
-                        <input
-                            type="text"
-                            value={geminiInputValue}
-                            onChange={(e) => setGeminiInputValue(e.target.value)}
-                            placeholder="Message to Gemini"
-                            style={{ width: 'calc(100% - 20px)', padding: '8px', boxSizing: 'border-box', borderRadius: '5px', border: '1px solid #ccc', color: '#000', marginBottom: '10px' }}
+                    <button onClick={() => handleSendMessage('gpt', gptInputValue)}>Send to GPT</button>
+                    <input
+                        type="text"
+                        value={geminiInputValue}
+                        onChange={(e) => setGeminiInputValue(e.target.value)}
+                        placeholder="Message to Gemini"
+                        style={{ width: 'calc(100% - 20px)', padding: '8px', boxSizing: 'border-box', borderRadius: '5px', border: '1px solid #ccc', marginBottom: '10px', color: '#000' }}
                         />
-                        <button onClick={() => handleSendMessage('gemini', geminiInputValue)}>Send to Gemini</button>
-                    </div>
+                    <button onClick={() => handleSendMessage('gemini', geminiInputValue)}>Send to Gemini</button>
                 </div>
             </div>
         </div>
