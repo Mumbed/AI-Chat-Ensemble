@@ -16,7 +16,7 @@ import "./index.css";
 import App from "./App";
 import { Management } from "./UtilPack";
 
-Management.init();
+await Management.init();
 
 // 기본적인 컨테이너 생성
 const container = document.createElement("div");

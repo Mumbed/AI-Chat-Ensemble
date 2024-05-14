@@ -64,7 +64,7 @@ export default function LoginForm() {
 
   const submit = async e => {
     e.preventDefault();
-    await Management.Auth.login(e.target[0].value, e.target[1].value);
+    await Management.Auth.login(e.target[1].value, e.target[2].value);
     setToggle(!toggle);
   }
 
