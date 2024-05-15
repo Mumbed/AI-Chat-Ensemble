@@ -3,7 +3,7 @@ import HomeSection1 from "@/components/home-Section1";
 import HomeSectiontest from "@/components/home-Section-test";
 import HomeSection3 from "@/components/home-Section3";
 import HomeSection4 from "@/components/home-Section4";
-import HomeTextAnimation from "@/components/home-text-animation";
+
 import {ScrollShadow} from "@nextui-org/react";
 export default function Home() {
 	return (
@@ -16,11 +16,11 @@ export default function Home() {
 			<div className = "min-h-[60rem]">
 				<HomeSectiontest />
 			</div>
-			<div className = "min-h-[60rem]">
+			<div className = "min-h-[100rem]">
 				<HomeSection3 />
 			</div>
 			<div className = "min-h-[60rem]">
-				<HomeTextAnimation />
+				<HomeSection4 />
 			</div>
 			</ScrollShadow>
 

@@ -1,17 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Link, Button } from "@nextui-org/react";
+import {Card, CardBody} from "@nextui-org/react";
+import HomeTextAnimation from "./home-text-animation";
 export default function HomeSection3() {
   return (
     <div>
-         <Button
-      href="" 
-      as={Link}
-      color="primary"
-      variant="solid"
-    >
-      시작하기
-    </Button>
+      <Card className = "bg-gray-100 min-h-[45rem]">
+        <CardBody>
+          <HomeTextAnimation />
+        </CardBody>
+      </Card>
     </div>
   );
 }
