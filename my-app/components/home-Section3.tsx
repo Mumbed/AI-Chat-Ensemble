@@ -1,18 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import {Card, CardHeader, CardBody, CardFooter, Divider, Image, Spacer, Tooltip, Button} from "@nextui-org/react";
-
+import { motion } from "framer-motion";
 export default function HomeSection3() {
-  // useState 수정 필요, false로 바꾸고 버튼을 누르면 텍스트가 출력되도록
   const [showGreeting, setShowGreeting] = useState(false); 
 
-  // 스크롤(10~ 100%)에 따라 해당 배열의 블러 값을 적용하도록
-  const blurs = [
-    "blur-2xl",
-    "blur-lg",
-    "blur-sm",
-    "blur-none"
-  ];
   return (
     <div>
       <div className = "flex flex-col items-center justify-center mb-32">
@@ -28,6 +20,11 @@ export default function HomeSection3() {
       <Spacer y={32} />
 
       <div className = "flex justify-center">
+      <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showGreeting ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Card className="max-w-[400px] h-96 w-96" >
           <CardHeader className="flex gap-3">
               <Image
@@ -63,9 +60,15 @@ export default function HomeSection3() {
               </Link>
           </CardFooter> */}
           </Card>
+          </motion.div>
 
           <Spacer x={16} />
 
+          <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showGreeting ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Card className="max-w-[400px] h-96 w-96">
           <CardHeader className="flex gap-3">
               <Image
@@ -102,6 +105,7 @@ export default function HomeSection3() {
               </Link>
           </CardFooter> */}
           </Card>
+          </motion.div>
       </div>
     </div>
   );

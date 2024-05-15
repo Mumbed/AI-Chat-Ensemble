@@ -45,7 +45,7 @@ export default function HomeSectiontest() {
         <Avatar
           className="w-20 h-20"
           radius="md"
-          src= {avatar2.src}
+          src= "https://ifh.cc/g/Sb8MWN.png"
         />
       </Badge>
       <Badge>

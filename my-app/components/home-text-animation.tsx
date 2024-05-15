@@ -6,7 +6,7 @@ const AnimatedText = () => {
   return (
     <div className = "">
       <nav className={styles.nav}>
-        {/* <h2>Donut Chart</h2> */}
+        {/* <h2>Chart</h2> */}
       </nav>
         <div className={styles.content}>
         <div className={styles.content__container}>
