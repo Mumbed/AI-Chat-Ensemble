@@ -1,13 +1,15 @@
+"use client"
+
 import Sidebar from '@/components/ask-sidebar';
 import Textarea from "@/components/ask-textarea";
+import { DataTools } from '../DataTools';
 
-type Room = string; // rooms 배열 요소의 타입 정의
 export default function CounterLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const rooms: Room[] = ["room1", "room2", "room3"]; 
+	const rooms: [string] = DataTools.Rooms.list; 
 	return (
 		<div className="flex h-screen">
 			<div className = "w-[22rem]  hidden md:block">

@@ -1,6 +1,11 @@
+"use client"
+
 import { title } from "@/components/primitives";
 import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
+import { DataTools } from "../DataTools";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 
 function InputX({ name, placeholder, type }: {
 	name: string;
@@ -27,9 +32,14 @@ function InputX({ name, placeholder, type }: {
 	)
 }
 export default function LoginPage() {
+	const [loginState, setLoginState] = useState(DataTools.Auth.isLogined);
+	if (loginState) redirect("/ask")
 	return (
 		<div>
-			<form>
+			<form onSubmit={async e => {
+				e.preventDefault();
+				setLoginState(await DataTools.Auth.login(e.target[1].value, e.target[2].value))
+			}}>
       			<fieldset>
 					<legend style={{
     				    top: "40px",
@@ -59,7 +69,7 @@ export default function LoginPage() {
 					>
 						Forgot Password?
 					</NextLink>
-      				<Button>로그인</Button>
+      				<Button type="submit">로그인</Button>
       			</fieldset>
     		</form>
 		</div>

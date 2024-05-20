@@ -3,9 +3,10 @@
 import axios from "axios";
 import React from "react";
 import { redirect } from 'next/navigation';
+import { siteConfig } from "@/config/site";
 
 const axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND,
+    baseURL: siteConfig.links.backend,
 });
 const DataTools = class {
     private static islogined = false;
@@ -28,6 +29,7 @@ const DataTools = class {
                 const response = await axiosInstance.post('/login/', { email, password });
                 localStorage.setItem("tokens", JSON.stringify(response.data.tokens));
                 await DataTools.init();
+                return true;
             } catch (e) {
                 if (axios.isAxiosError(e)) {
                     if (e.response?.status === 400) {
@@ -38,6 +40,7 @@ const DataTools = class {
                 } else {
                     console.error("An unknown error occurred:", e);
                 }
+                return false;
             }
         }
         static regist = async (name: string, email: string, password: string, verify: string) => {
@@ -107,9 +110,8 @@ const DataTools = class {
         }
     }
     static init = async () => {
-        const token = JSON.parse(localStorage.getItem("tokens") ?? "false")
-        console.log(true)
-        if (token != "") {
+        const token = JSON.parse(localStorage.getItem("tokens") ?? "false");
+        if (token) {
             axiosInstance.defaults.headers['Authorization'] = `Bearer ${token.access}`;
             const [auth, rooms] = await Promise.all([
                 axiosInstance.get('/get_user_info/'),

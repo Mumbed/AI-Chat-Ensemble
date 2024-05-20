@@ -1,12 +1,16 @@
+"use client"
+
 import { title } from "@/components/primitives";
 import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
+import { DataTools } from "../DataTools";
+import { useState } from "react";
+import { redirect } from "next/navigation";
 
-interface InputXProps {
+function InputX({ name, placeholder }: {
 	name: string;
 	placeholder: string;
-  }
-function InputX({ name, placeholder }: InputXProps): React.ReactElement {
+}): React.ReactElement {
 	return (
 	  	<div style={{
 			display: "flex",
@@ -27,9 +31,14 @@ function InputX({ name, placeholder }: InputXProps): React.ReactElement {
 	)
 }
 export default function ForgotPage() {
+	const [loginState, setLoginState] = useState(DataTools.Auth.isLogined);
+	if (loginState) redirect("/ask")
 	return (
 		<div>
-			<form>
+			<form onSubmit={e => {
+				e.preventDefault();
+				console.log(DataTools.Auth.regist(e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value))
+			}}>
       			<fieldset>
 				  	<h1 style={{
       					lineHeight: "42px"
@@ -38,7 +47,7 @@ export default function ForgotPage() {
       				<InputX name="email" placeholder="Enter your name."></InputX>
       				<InputX name="password" placeholder="Enter your name."></InputX>
       				<InputX name="verify password" placeholder="Enter your name."></InputX>
-      				<Button>회원가입</Button>
+      				<Button type="submit">회원가입</Button>
 					<span 
 						style={{
       						display: "block",
