@@ -90,16 +90,17 @@ export const Navbar = () => {
 				</NavbarItem>
 				{/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
 				<NavbarItem className="hidden md:flex">
+					<NextLink href="/Login">
 					<Button
-            isExternal
-						as={Link}
+						// as={Link} //{/* 이 버튼은 Link로 작동하고 있다.*/}
 						className="text-sm font-normal text-default-600 bg-default-100"
-						href="/ask"
+						// href="/Login"//{/* 주소는 이곳이다.*/}
 						variant="flat"
 						color="primary"
 					>
 						로그인
 					</Button>
+					</NextLink>
 				</NavbarItem>
 			</NavbarContent>
 
