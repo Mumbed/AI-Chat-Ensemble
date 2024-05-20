@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
-import {Button, ButtonGroup} from "@nextui-org/react";
-type Room = string; // rooms 배열 요소의 타입과 일치시키기
+import { Button } from "@nextui-org/react";
+import Trashbutton from "@/components/ask-trash-button";
+
+type Room = string;
 
 type SidebarProps = {
   rooms: Room[];
@@ -9,16 +11,17 @@ type SidebarProps = {
 
 export default function AskSidebar({ rooms }: SidebarProps) {
   return (
-    <section className="h-screen w-[22rem] fixed left-0 top-0 bg-gray-100 overflow-y-auto mt-16">
-    <nav className="mt-6">
-    <div className="px-6 py-3">
-          {rooms.map((room, index) => (
-            <Button key={index} className="w-full mb-2">
-              {room}
-            </Button>
-          ))}
+    <section className="h-screen fixed left-0 top-0 bg-gray-100 overflow-y-auto mt-16 dark:bg-zinc-800 ">
+      <nav className="mt-6">
+        <div className="px-6 py-3 flex flex-col gap-4">
+            {rooms.map((room, index) => (
+            <div key={index} className="flex flex-row gap-2">
+            <Button className="w-64">{room}</Button>
+            <Trashbutton /> {/* 이 버튼을 눌렀을때 방이 사라지는 기능이 추가*/}
+          </div>
+            ))}
         </div>
-    </nav>
-  </section>
+      </nav>
+    </section>
   );
 }

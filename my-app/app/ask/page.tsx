@@ -1,14 +1,12 @@
 import { title } from "@/components/primitives";
-import Textarea from "@/components/ask-textarea";
+import AnswerBox from "@/components/ask-AnswerBox";
 export default function CounterPage() {
 	return (
         <div className="flex flex-col min-h-screen">
-            <div className="flex flex-col flex-grow">
-                <h1 className={title()}>ask</h1>
+            <div className="flex flex-row gap-8">
                 {/* 페이지 내용 */}
-            </div>
-            <div className="sticky bottom-0">
-                <Textarea />
+                <AnswerBox />
+                <AnswerBox />
             </div>
         </div>
 	);
