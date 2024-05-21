@@ -16,10 +16,10 @@ export default function Home() {
 			<div className = "min-h-[60rem]">
 				<HomeSectiontest />
 			</div>
-			<div className = "min-h-[100rem]">
+			<div className = "min-h-[80rem]">
 				<HomeSection3 />
 			</div>
-			<div className = "min-h-[60rem]">
+			<div className = "min-h-[20rem]">
 				<HomeSection4 />
 			</div>
 			<div className = "min-h-[60rem] ">
