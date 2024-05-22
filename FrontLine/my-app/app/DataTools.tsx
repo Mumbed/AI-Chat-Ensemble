@@ -8,6 +8,12 @@ import { siteConfig } from "@/config/site";
 const axiosInstance = axios.create({
     baseURL: siteConfig.links.backend,
 });
+const DataResource = class {
+    private static userInfoResource;
+    static get userInfo() {
+        if (this.userInfoResource) return this.userInfoResource;
+    }
+}
 const DataTools = class {
     private static islogined = false;
     private static username = null;
