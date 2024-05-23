@@ -1,8 +1,30 @@
-import React from "react";
+'use client'
+
+import React, { useEffect } from "react";
 import { title } from "@/components/primitives";
 import LoginTextArea from "@/components/login-textarea";
 import LoginButton from "@/components/login-button";
+import { DataResource } from "../DataResource";
+import { useRouter } from "next/navigation";
 export default function CounterPage() {
+	const router = useRouter();
+    useEffect(() => {
+        const userAsync = async () => {
+			const userDataResource = await DataResource.Auth.get();
+            if (userDataResource.isLogined) router.push('/ask');
+			else {
+				document.querySelector('form')!.onsubmit = async (e) => {
+					e.preventDefault();
+					const form = e.target as HTMLFormElement;
+					const email = (form[0] as HTMLInputElement).value;
+					const password = (form[1] as HTMLInputElement).value;
+					if ((await DataResource.Auth.login(email, password)).success) router.push('/ask');
+				};
+			}
+        };
+        userAsync();
+    }, []);
+
 	return (
 		<div className = "flex flex-col items-center space-y-12 mt-12">
 			<div className="flex flex-row space-x-2 mb-12">

@@ -3,7 +3,7 @@
 import Sidebar from '@/components/ask-sidebar';
 import Textarea from "@/components/ask-textarea";
 import { useEffect, useState } from 'react';
-import { DataResource } from '../DataResource';
+import { DataResource } from '../../DataResource';
 import { useRouter } from 'next/navigation';
 
 export default function CounterLayout({
@@ -17,7 +17,7 @@ export default function CounterLayout({
 		const roomAsync = async () => {
 			const userDataResource = await DataResource.Auth.get();
             if (!userDataResource.isLogined) router.push('/login');
-			else setRooms(userDataResource.rooms);
+			else true;
         };
         roomAsync();
 	})
