@@ -7,7 +7,7 @@ import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 {/* 이 파일은 root layout이다. 즉 하위 자식들에게 공유하는 놈이다.*/}
-{/* 각 페이지마다 레이아웃 스타일을 변경하고 싶으면, 각 파일의 layout.tsx파일을 수정하면 된다.*/}
+{/* 각 페이지마다 레이아웃 스타일을 변경하고 싶으면, 각 파일의 latout.tsx파일을 수정하면 된다.*/}
 
 export const metadata: Metadata = {
 	title: {

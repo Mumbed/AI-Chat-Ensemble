@@ -1,4 +1,4 @@
-export default function CounterLayout({
+export default function SignupLayout({
 	children,
 }: {
 	children: React.ReactNode;

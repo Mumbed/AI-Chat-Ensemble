@@ -1,77 +1,24 @@
-"use client"
-
+import React from "react";
 import { title } from "@/components/primitives";
-import { Button } from "@nextui-org/button";
-import NextLink from "next/link";
-import { DataTools } from "../DataTools";
-import { redirect } from "next/navigation";
-import { useState } from "react";
+import LoginTextArea from "@/components/login-textarea";
+import LoginButton from "@/components/login-button";
+export default function CounterPage() {
+	return (
+		<div className = "flex flex-col items-center space-y-12 mt-12">
+			<div className="flex flex-row space-x-2 mb-12">
+				<span className={title({ color: "violet" })}>ACE</span>
+				<h1 className={title()}>에 오신것을 환영합니다.</h1>
+			</div>
+			<div className = "flex flex-row items-center bg-gray-100 rounded-lg dark:bg-zinc-800 py-12">
+				<div className = "m-12">
+				<LoginTextArea />
+				</div>
+				<div className = "m-12">
+				<LoginButton />
+				</div>
+				
+			</div>
 
-function InputX({ name, placeholder, type }: {
-	name: string;
-	placeholder: string;
-	type: string | undefined
-}): React.ReactElement {
-	return (
-	  	<div style={{
-			display: "flex",
-			flexDirection: "column",
-			margin: "25px 0px",
-			color: "rgba(255, 255, 255, 0.9)"
-	  	}}>
-			<label style={{
-			  	fontSize: "14px",
-			  	marginBottom: "4px",
-			  	color: "rgba(255, 255, 255, 0.8)"
-			}}>{name.charAt(0).toUpperCase() + name.slice(1)}</label>
-			<input style={{
-			  	border: "1px solid rgba(255, 255, 255, 0.3)",
-			  	background: "none"
-			}} required={true} name={name.split(" ")[0]} type={type} placeholder={placeholder}></input>
-		</div>
-	)
-}
-export default function LoginPage() {
-	const [loginState, setLoginState] = useState(DataTools.Auth.isLogined);
-	if (loginState) redirect("/ask")
-	return (
-		<div>
-			<form onSubmit={async e => {
-				e.preventDefault();
-				setLoginState(await DataTools.Auth.login(e.target[1].value, e.target[2].value))
-			}}>
-      			<fieldset>
-					<legend style={{
-    				    top: "40px",
-    				    width: "100%",
-    				    color: "slateblue",
-    				    textAlign: "center",
-    				    fontSize: "xxx-large",
-    				    fontWeight: "600"
-    				}}>WELCOME BACK</legend>
-    				<p style={{
-    				    display: "inline-block",
-    				    width: "100%",
-    				    color: "rgba(150, 150, 150, 0.5)",
-    				    textAlign: "center",
-    				    fontSize: "18px",
-    				}}>ACE에 오신걸 환영합니다.</p>
-        			<InputX name="email" placeholder="Enter your email" type="email"></InputX>
-      				<InputX name="password" placeholder="Enter your password" type="password"></InputX>
-      				<NextLink
-						style={{
-      				  		fontSize: "14px",
-      				  		flexDirection: "row-reverse",
-      				  		top: "-20px",
-      				  		color: "rgba(255, 255, 255, 0.6)"
-      					}}
-						href="/forgot"
-					>
-						Forgot Password?
-					</NextLink>
-      				<Button type="submit">로그인</Button>
-      			</fieldset>
-    		</form>
 		</div>
 	);
 }
