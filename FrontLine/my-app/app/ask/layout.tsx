@@ -15,6 +15,7 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
   
 	useEffect(() => {
 	  const roomAsync = async () => {
+		let locked = false;
 		const userDataResource = await DataResource.Auth.get();
 		if (!userDataResource.isLogined) router.push('/login');
 
@@ -24,33 +25,40 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 
 		  else setList(roomDataSource.data.map((item: { question: string }) => item.question));
 		} else setList(userDataResource.rooms);
-
+		
 		document.querySelector("form")!.onsubmit = async e => {
 			e.preventDefault();
-			const form = e.target as HTMLFormElement;
-			const input = (form[0] as HTMLTextAreaElement).value;
-			if (param.roomid) {
-				const result = await DataResource.Room.submitQuestion({
-					roomid: param.roomid as string,
-					question: input
-				})
-				if (!result.success) router.push("/login");
-
-				else {
-					setList(result.data!.map((item: { question: string }) => item.question));
-					router.push(`/ask/${param.roomid}/${result.data!.length - 1}`);
-				}
+			if (locked) {
+				console.log("이미 처리중인 질문 데이터가 존재합니다.");
+				return;
 			} else {
-				const result = await DataResource.Room.createRoom();
-				if (!result.success) router.push("/login");
-
-				else {
-					await DataResource.Room.submitQuestion({
-						roomid: result.roomid,
+				locked = true;
+				const form = e.target as HTMLFormElement;
+				const input = (form[0] as HTMLTextAreaElement).value;
+				if (param.roomid) {
+					const result = await DataResource.Room.submitQuestion({
+						roomid: param.roomid as string,
 						question: input
 					})
-					router.push(`/ask/${result.roomid}/0`);
+					if (!result.success) router.push("/login");
+
+					else {
+						setList(result.data!.map((item: { question: string }) => item.question));
+						router.push(`/ask/${param.roomid}/${result.data!.length - 1}`);
+					}
+				} else {
+					const result = await DataResource.Room.createRoom();
+					if (!result.success) router.push("/login");
+
+					else {
+						await DataResource.Room.submitQuestion({
+							roomid: result.roomid,
+							question: input
+						})
+						router.push(`/ask/${result.roomid}/0`);
+					}
 				}
+				locked = false;
 			}
 		}
 	  };
