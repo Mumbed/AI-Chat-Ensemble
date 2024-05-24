@@ -36,6 +36,7 @@ const DataResource = class {
          */
         static login = async (email: string, password: string) => {
             try {
+                axiosInstance.defaults.headers['Authorization'] = null;
                 const data = await axiosInstance.post("/login/", { email, password });
                 localStorage.setItem("token", data.data.tokens.access);
                 console.log(data.data.tokens.access)
@@ -50,6 +51,7 @@ const DataResource = class {
          */
         static regist = async (name: string, email: string, password: string, verify: string) => {
             try {
+                axiosInstance.defaults.headers['Authorization'] = null;
                 const data = await axiosInstance.post('/register/', { name, email, password, verify });
                 localStorage.setItem("token", data.data.tokens.access);
                 console.log(data.data.tokens.access);
@@ -63,7 +65,7 @@ const DataResource = class {
          * @description 현재 사용자 정보를 불러오는 함수
          */
         static get = async () => {
-            if (this.buffer.isLogined || localStorage.token == null) return this.buffer;
+            if (this.buffer.isLogined || localStorage.token == "") return this.buffer;
             axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
             try {
                 const [auth, rooms] = await Promise.all([
@@ -77,12 +79,51 @@ const DataResource = class {
                     chat_room_id: string
                 }) => room.chat_room_id)
             } catch (e) {
-                console.log(e)
                 localStorage.removeItem("token");
                 this.buffer = copy(this.template)
                 return this.buffer;
             }
             return this.buffer;
+        }
+    }
+
+    /**
+     * 채팅방 데이터 관련
+     */
+    static Room = class Room {
+        static get = async (roomId: string) => {
+            try {
+                const chatlist = await axiosInstance.get(`/fetch_chat_history/${roomId}`);
+                return { success: true, data: chatlist.data.reduce((acc: {
+                    question: string;
+                    response: {
+                        [source: string]: string;
+                    };
+                }[], chat: {
+                    id: number;
+                    question: string;
+                    response: string;
+                    source: string;
+                    user_id: number;
+                }) => {
+                    const { question, response, source } = chat;
+                    let transformedItem = acc.find(item => item.question === question);
+            
+                    if (!transformedItem) {
+                        transformedItem = {
+                            question,
+                            response: {}
+                        };
+                        acc.push(transformedItem);
+                    }
+            
+                    transformedItem.response[source] = response;
+                    return acc;
+                }, []) };
+            } catch (e) {
+                DataResource.Auth.get();
+                return { success: false, reason: e };
+            }
         }
     }
 }
