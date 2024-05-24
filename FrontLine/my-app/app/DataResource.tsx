@@ -140,7 +140,7 @@ export default class DataResource {
                     }
                     transformedItem.response[source] = response;
                     return acc;
-                }, []) };
+                }, []).slice(1) };
             } catch (e) {
                 DataResource.Auth.get();
                 return { success: false, reason: e };

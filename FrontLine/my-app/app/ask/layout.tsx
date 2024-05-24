@@ -49,7 +49,7 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 						roomid: result.roomid,
 						question: input
 					})
-					router.push(`/ask/${result.roomid}/1`);
+					router.push(`/ask/${result.roomid}/0`);
 				}
 			}
 		}
