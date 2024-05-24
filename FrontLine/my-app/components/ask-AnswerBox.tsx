@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
+import { marked } from "marked";
 
 interface AnswerBoxProps {
   aiSource: string;
@@ -20,8 +21,7 @@ export default function AnswerBox({ aiSource, aiResponse }: AnswerBoxProps) {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="px-3 py-0 text-small mb-10 text-zinc-950 dark:text-neutral-50">
-        <div dangerouslySetInnerHTML={{ __html: aiResponse }} />
+      <CardBody dangerouslySetInnerHTML={{ __html: marked(aiResponse) }} className="px-3 py-0 text-small mb-10 text-zinc-950 dark:text-neutral-50">
       </CardBody>
     </Card>
   );
