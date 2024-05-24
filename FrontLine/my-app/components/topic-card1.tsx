@@ -12,7 +12,7 @@ export default function Card1() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link href="/Ask" passHref>
+    <Link href="/Topic" passHref>
       <Card className="py-4 p-4 cursor-pointer">
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
           <small className="text-default-500">더 정확한 질문을 받으실래요?</small>
