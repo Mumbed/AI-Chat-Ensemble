@@ -12,26 +12,26 @@ export default function Card2() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link href="/Ask" passHref>
-    <Card className="py-4 p-4">
-      <CardHeader className="pb-0 pt-2 px-4 flex-col items-start ">
-        <small className="text-default-500">바로 질문하고 싶으신가요?</small>
-        <h4 className="font-bold text-large">바로 질문하기</h4>
-      </CardHeader>
-      <CardBody
-        className="overflow-visible py-2"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <Image
-          alt="Card background"
-          className="object-cover rounded-xl invert dark:invert-0 dark:brightness-200"
-          src={isHovered ? SkipButtonGif : TransparentImage}
-          width={270}
-          height={270}
-        />
-      </CardBody>
-    </Card>
+    <Link href="/ask" passHref>
+      <Card className="py-4 p-4">
+        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start ">
+          <small className="text-default-500">바로 질문하고 싶으신가요?</small>
+          <h4 className="font-bold text-large">바로 질문하기</h4>
+        </CardHeader>
+        <CardBody
+          className="overflow-visible py-2"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <Image
+            alt="Card background"
+            className="object-cover rounded-xl invert dark:invert-0 dark:brightness-200"
+            src={isHovered ? SkipButtonGif : TransparentImage}
+            width={270}
+            height={270}
+          />
+        </CardBody>
+      </Card>
     </Link>
   );
 }
