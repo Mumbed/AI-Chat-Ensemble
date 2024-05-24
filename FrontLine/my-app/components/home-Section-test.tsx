@@ -23,7 +23,6 @@ export default function HomeSectiontest() {
         [0.5, 1],
         ["-100%", "-40%"]
       );
-  console.log(avatar2)
       
   return (
     <div  className="flex flex-col"  style={{ fontFamily: "Arial, sans-serif" }}>

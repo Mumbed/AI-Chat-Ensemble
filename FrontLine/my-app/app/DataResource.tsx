@@ -37,7 +37,6 @@ export default class DataResource {
                 axiosInstance.defaults.headers['Authorization'] = null;
                 const data = await axiosInstance.post("/login/", { email, password });
                 localStorage.setItem("token", data.data.tokens.access);
-                console.log(data.data.tokens.access)
                 return { success: true };
             } catch (e) {
                 return { success: false, reason: e };
@@ -52,7 +51,6 @@ export default class DataResource {
                 axiosInstance.defaults.headers['Authorization'] = null;
                 const data = await axiosInstance.post('/register/', { name, email, password, verify });
                 localStorage.setItem("token", data.data.tokens.access);
-                console.log(data.data.tokens.access);
                 return { success: true };
             } catch (e) {
                 return { success: false, reason: e };
