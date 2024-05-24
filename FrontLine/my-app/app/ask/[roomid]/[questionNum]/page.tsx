@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 export default function QuestionPage() {
     const router = useRouter();
     const param = useParams();
-    const roomid = param.roomid as string;
     const questionNum = parseInt(param.questionNum as string);
     const [gptResponse, setGptResponse] = useState("");
     const [geminiResponse, setGeminiResponse] = useState("");
@@ -17,11 +16,13 @@ export default function QuestionPage() {
       const roomAsync = async () => {
         const userDataResource = await DataResource.Auth.get();
         if (!userDataResource.isLogined) router.push('/login');
+        
         else {
-            const roomDataSource = await DataResource.Room.get(param.roomid as string);
-		    if (!roomDataSource.success) router.push('/login');
-            setGptResponse(roomDataSource.data[questionNum].response.gpt ?? "");
-            setGeminiResponse(roomDataSource.data[questionNum].response.gemini ?? "");
+          const roomDataSource = await DataResource.Room.get(param.roomid as string);
+		      if (!roomDataSource.success) router.push('/login');
+
+          setGptResponse(roomDataSource.data[questionNum].response.gpt ?? "");
+          setGeminiResponse(roomDataSource.data[questionNum].response.gemini ?? "");
         }
       };
       roomAsync();
