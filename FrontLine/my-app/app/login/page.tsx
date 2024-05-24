@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { title } from "@/components/primitives";
 import LoginTextArea from "@/components/login-textarea";
 import LoginButton from "@/components/login-button";
-import { DataResource } from "../DataResource";
+import DataResource from "../DataResource";
 import { useRouter } from "next/navigation";
 export default function CounterPage() {
 	const router = useRouter();

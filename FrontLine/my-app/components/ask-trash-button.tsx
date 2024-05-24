@@ -14,7 +14,7 @@ export default function App() {
                   <ModalHeader className="flex flex-col gap-1">채팅방 삭제</ModalHeader>
                   <ModalBody>
                     <p> 
-                      이 채팅방을 삭제하시겠어요?
+                      이 데이터를 삭제하시겠어요?
                     </p>
                   </ModalBody>
                   <ModalFooter>

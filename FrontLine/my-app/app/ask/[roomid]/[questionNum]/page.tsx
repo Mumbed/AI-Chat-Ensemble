@@ -1,6 +1,6 @@
 "use client"
 
-import { DataResource } from "@/app/DataResource";
+import DataResource from "@/app/DataResource";
 import AnswerBox from "@/components/ask-AnswerBox";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

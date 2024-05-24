@@ -3,7 +3,7 @@
 import Sidebar from '@/components/ask-sidebar';
 import Textarea from "@/components/ask-textarea";
 import { useEffect, useState } from 'react';
-import { DataResource } from '../DataResource';
+import DataResource from '../DataResource';
 import { useParams, useRouter } from 'next/navigation';
 import QuestionSidebar from '@/components/question-sidebar';
 import AnswerBox from '@/components/ask-AnswerBox';
@@ -17,11 +17,42 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 	  const roomAsync = async () => {
 		const userDataResource = await DataResource.Auth.get();
 		if (!userDataResource.isLogined) router.push('/login');
+
 		else if (param.roomid) {
 		  const roomDataSource = await DataResource.Room.get(param.roomid as string);
 		  if (!roomDataSource.success) router.push('/login');
+
 		  else setList(roomDataSource.data.map((item: { question: string }) => item.question));
 		} else setList(userDataResource.rooms);
+
+		document.querySelector("form")!.onsubmit = async e => {
+			e.preventDefault();
+			const form = e.target as HTMLFormElement;
+			const input = (form[0] as HTMLTextAreaElement).value;
+			if (param.roomid) {
+				const result = await DataResource.Room.submitQuestion({
+					roomid: param.roomid as string,
+					question: input
+				})
+				if (!result.success) router.push("/login");
+
+				else {
+					setList(result.data!.map((item: { question: string }) => item.question));
+					router.push(`/ask/${param.roomid}/${result.data!.length - 1}`);
+				}
+			} else {
+				const result = await DataResource.Room.createRoom();
+				if (!result.success) router.push("/login");
+
+				else {
+					await DataResource.Room.submitQuestion({
+						roomid: result.roomid,
+						question: input
+					})
+					router.push(`/ask/${result.roomid}/1`);
+				}
+			}
+		}
 	  };
 	  roomAsync();
 	}, [param.roomid, router]);

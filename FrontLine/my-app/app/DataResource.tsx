@@ -1,6 +1,4 @@
-import axios, { AxiosError } from "axios";
-import React from "react";
-import { redirect } from 'next/navigation';
+import axios from "axios";
 import { siteConfig } from "@/config/site";
 
 /**
@@ -18,7 +16,7 @@ const copy = (to: any) => JSON.parse(JSON.stringify(to));
  * @description 서버의 데이터를 가져오거나 설정하는 클래스 
  * @description (이 클래스는 오로지 클라이언트에서의 useEffect 내에서만 정상 작동합니다.)
  */
-const DataResource = class {
+export default class DataResource {
     /**
      * @description 사용자 계정 관련.
      */
@@ -65,7 +63,7 @@ const DataResource = class {
          * @description 현재 사용자 정보를 불러오는 함수
          */
         static get = async () => {
-            if (this.buffer.isLogined || localStorage.token == "") return this.buffer;
+            if (localStorage.token == "") return this.buffer;
             axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
             try {
                 const [auth, rooms] = await Promise.all([
@@ -91,6 +89,31 @@ const DataResource = class {
      * 채팅방 데이터 관련
      */
     static Room = class Room {
+        static createRoom = async () => {
+            try {
+                const result = await axiosInstance.post("/createRoom/");
+                return { success: true, roomid: result.data.chat_room_id, allRooms: (await DataResource.Auth.get()).rooms }
+            } catch (e) {
+                DataResource.Auth.get();
+                return { success: false, reason: e };
+            }
+        }
+        static submitQuestion = async ({ roomid, question } : {
+            roomid: string,
+            question: string
+        }) => {
+            try {
+                await Promise.allSettled([
+                    axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" }),
+                    axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" })
+                ])
+                return { success: true, data: (await this.get(roomid)).data };
+            } catch (e) {
+                DataResource.Auth.get();
+                return { success: false, reason: e };
+            }
+        }
+
         static get = async (roomId: string) => {
             try {
                 const chatlist = await axiosInstance.get(`/fetch_chat_history/${roomId}`);
@@ -108,7 +131,6 @@ const DataResource = class {
                 }) => {
                     const { question, response, source } = chat;
                     let transformedItem = acc.find(item => item.question === question);
-            
                     if (!transformedItem) {
                         transformedItem = {
                             question,
@@ -116,7 +138,6 @@ const DataResource = class {
                         };
                         acc.push(transformedItem);
                     }
-            
                     transformedItem.response[source] = response;
                     return acc;
                 }, []) };
@@ -127,135 +148,3 @@ const DataResource = class {
         }
     }
 }
-const DataTools = class {
-    private static islogined = false;
-    private static username = null;
-    private static email = null;
-    private static rooms = [];
-
-    static Auth = class Auth {
-        static get isLogined() {
-            return DataTools.islogined;
-        }
-        static get username() {
-            return DataTools.username;
-        }
-        static get email() {
-            return DataTools.email;
-        }
-        static login = async (email: string, password: string) => {
-            try {
-                //const response = await axiosInstance.post('/login/', { email, password });
-                //localStorage.setItem("tokens", JSON.stringify(response.data.tokens));
-                await DataTools.init();
-                return true;
-            } catch (e) {
-                if (axios.isAxiosError(e)) {
-                    if (e.response?.status === 400) {
-                        console.log(e.response.data.error);
-                    } else {
-                        console.error("An unexpected error occurred:", e.message);
-                    }
-                } else {
-                    console.error("An unknown error occurred:", e);
-                }
-                return false;
-            }
-        }
-        static regist = async (name: string, email: string, password: string, verify: string) => {
-            try {
-                //const response = await axiosInstance.post('/register/', { name, email, password, verify });
-                //localStorage.setItem("tokens", JSON.stringify(response.data.tokens));
-                await DataTools.init();
-            } catch (e) {
-                if (axios.isAxiosError(e)) {
-                    if (e.response?.status === 400) {
-                        console.log(e.response.data.error);
-                    } else {
-                        console.error("An unexpected error occurred:", e.message);
-                    }
-                } else {
-                    console.error("An unknown error occurred:", e);
-                }
-            }
-        }
-    }
-    static Rooms = class Rooms {
-        private static roomId = "";
-        private static roomdata: [{
-            question: string 
-            response: string 
-            source: string 
-        }];
-        static get list() {
-            return JSON.parse(JSON.stringify(DataTools.rooms));
-        }
-        static get data() {
-            return JSON.parse(JSON.stringify(this.roomdata));
-        }
-
-        static syncRoomData = async (roomId: string) => {
-            if (roomId == "") return;
-            try {
-                //const response = await axiosInstance.get(`/fetch_chat_history/${roomId}`);
-                //this.roomId = roomId
-                //this.roomdata = response.data.map(({question, response, source}: {
-                //    question: string 
-                //    response: string 
-                //    source: string 
-                //}) => ({
-                //    question: question,
-                //    response: response,
-                //    source: source
-                //}))
-            } catch (e) {
-                console.log(e);
-            }
-        }
-
-        static createRoom = () => {
-            
-        }
-        static submitQuestion = async ({question, source}: {
-            question: string 
-            source: string 
-        }) => {
-            //const response = await axiosInstance.post(`/chat/${this.roomId}/`, { question, source })
-            //this.roomdata.push({
-            //    question: response.data.question,
-            //    response: response.data.response,
-            //    source: source
-            //})
-        }
-    }
-    static init = async () => {
-        const token = JSON.parse(localStorage.getItem("tokens") ?? "false");
-        if (token) {
-            //axiosInstance.defaults.headers['Authorization'] = `Bearer ${token.access}`;
-            //const [auth, rooms] = await Promise.all([
-            //    axiosInstance.get('/get_user_info/'),
-            //    axiosInstance.get('/list_chat_rooms/')
-            //]).catch(e => {
-            //    console.log(e);
-            //    localStorage.removeItem("tokens");
-            //    window.location.reload();
-            //    return [];
-            //});
-            //this.islogined = true;
-            //this.username = auth.data.name;
-            //this.email = auth.data.email;
-            //this.rooms = rooms.data.map((obj: {
-            //    chat_room_id: string
-            //}) => obj.chat_room_id);
-        }
-    }
-}
-DataTools.init();
-const Protecter = ({ children }: {
-    children: React.ReactNode
-}) => {
-    if (!DataTools.Auth.isLogined) redirect("/login");
-    return children
-};
-
-export { DataResource, Protecter }

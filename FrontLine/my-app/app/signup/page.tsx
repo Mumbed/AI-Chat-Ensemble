@@ -8,7 +8,7 @@ import Button from "@/components/signup-button";
 import SignUpPasswordVerify from "@/components/signup-password-verify";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { DataResource } from "../DataResource";
+import DataResource from "../DataResource";
 export default function SignupPage() {
 	const router = useRouter();
     useEffect(() => {
