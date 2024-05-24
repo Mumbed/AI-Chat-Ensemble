@@ -14,7 +14,7 @@ export const siteConfig = {
     },
     {
       label: "Ask",
-      href: "/ask",
+      href: "/askBefore",
     },
     {
       label: "About",
