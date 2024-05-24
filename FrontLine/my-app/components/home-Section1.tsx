@@ -1,10 +1,10 @@
 import React from "react";
 import {Image} from "@nextui-org/react";
-import { Link } from "@nextui-org/link";
 import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
+import NextLink from "next/link";
 export default function HomeSection1() {
   return (
     <section className="flex flex-row items-center justify-center gap-6 py-8 md:py-10">
@@ -20,21 +20,19 @@ export default function HomeSection1() {
         </div>
 
         <div className="flex gap-3 ms-20 my-8">
-            <Link
-                isExternal
-                href="/about"
+            <NextLink
+                href="/askBefore"
                 className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
             >
                 시작하기
-            </Link>
-            <Link
-                isExternal
+            </NextLink>
+            <NextLink
                 className={buttonStyles({ variant: "bordered", radius: "full" })}
                 href={siteConfig.links.github}
             >
                 <GithubIcon size={20} />
                 GitHub
-            </Link>
+            </NextLink>
             </div>
     </div>
     <Image
