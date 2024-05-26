@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from openapp.views import chat_view, CreateRoom, test, fetch_chat_history, list_chat_rooms
+from openapp.views import chat_view, delete_chat_room, CreateRoom, test, fetch_chat_history, list_chat_rooms
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -13,5 +13,7 @@ urlpatterns = [
     path('list_chat_rooms/', list_chat_rooms, name='list_chat_rooms'),  # New URL for listing chat rooms
 
     path('test/', test),
-    path('', include('user.urls')),    
+    path('', include('user.urls')), 
+    path('delete_chat_room/<str:chat_room_id>/', delete_chat_room, name='delete_chat_room'),
+   
 ]

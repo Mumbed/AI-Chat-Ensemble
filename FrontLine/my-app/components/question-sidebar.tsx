@@ -13,8 +13,8 @@ type SidebarProps = {
 export default function QuestionSidebar({ questions, roomid }: SidebarProps) {
   const router = useRouter();
 
-  const handleQuestionClick = (questionIndex: number) => {
-    router.push(`/ask/${roomid}/${questionIndex}`);
+  const handleQuestionClick = (index: number) => {
+    router.push(`/ask/${roomid}#question${index}`);
   };
 
   return (

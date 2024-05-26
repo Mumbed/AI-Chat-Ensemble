@@ -55,7 +55,7 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 							roomid: result.roomid,
 							question: input
 						})
-						router.push(`/ask/${result.roomid}/0`);
+						router.push(`/ask/${result.roomid}`);
 					}
 				}
 				locked = false;
