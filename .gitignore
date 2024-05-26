@@ -1,6 +1,5 @@
-/test.py
-myproject/openapp/views.py
-myproject/openapp/views.py
-myproject/openapp/views.py
-clova-x.naver.com_cookies.txt
-node_modules/
+
+/my-app/node_modules
+BackLine/openapp/views.py
+BackLine/db.sqlite3
+*.pyc
