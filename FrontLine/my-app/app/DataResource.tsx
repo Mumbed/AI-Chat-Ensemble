@@ -96,15 +96,23 @@ export default class DataResource {
                 return { success: false, reason: e };
             }
         }
+        static deleteRoom = async (roomId: string) => {
+            try {
+                await axiosInstance.delete(`/delete_chat_room/${roomId}`);
+                return { success: true, data: (await this.get(roomId)).data };
+            } catch (e) {
+                return { success: false, reason: e};
+            }
+        }
+
         static submitQuestion = async ({ roomid, question } : {
             roomid: string,
             question: string
         }) => {
             try {
-                await Promise.allSettled([
-                    axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" }),
-                    axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" })
-                ])
+                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" });
+                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" });
+                console.log(true);
                 return { success: true, data: (await this.get(roomid)).data };
             } catch (e) {
                 DataResource.Auth.get();

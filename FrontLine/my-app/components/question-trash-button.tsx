@@ -1,20 +1,9 @@
-"use client"
-
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import Trashicon from '@/imgsrc/Trash-icon';
-import DataResource from "@/app/DataResource";
 
-export default function App({ id, handler }: {
-  id: string,
-  handler: Dispatch<SetStateAction<string[]>>
-}) {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const deleteRoom = async (closer: () => void) => {
-    closer();
-    const roomlist = await DataResource.Room.deleteRoom(id);
-    if (roomlist) handler(roomlist.data);
-  }
+export default function App() {
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
   return (
     <div>
     <Button onPress={onOpen} isIconOnly ><Trashicon /></Button>
@@ -32,7 +21,7 @@ export default function App({ id, handler }: {
                     <Button color="danger" variant="light" onPress={onClose}>
                       취소
                     </Button>
-                    <Button color="primary" onPress={() => deleteRoom(onClose)}>
+                    <Button color="primary" onPress={onClose}>
                       확인
                     </Button>
                   </ModalFooter>

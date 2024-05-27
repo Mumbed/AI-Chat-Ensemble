@@ -6,10 +6,11 @@ import { useEffect, useState } from 'react';
 import DataResource from '../DataResource';
 import { useParams, useRouter } from 'next/navigation';
 import QuestionSidebar from '@/components/question-sidebar';
-import AnswerBox from '@/components/ask-AnswerBox';
+import React from 'react';
 
 export default function CounterLayout({ children }: { children: React.ReactNode }) {
 	const [list, setList] = useState<string[]>([]);
+	const [refreshSwitch, setRefreshSwitch] = useState(false);
 	const router = useRouter();
 	const param = useParams();
   
@@ -44,7 +45,7 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 
 					else {
 						setList(result.data!.map((item: { question: string }) => item.question));
-						router.push(`/ask/${param.roomid}/${result.data!.length - 1}`);
+						router.refresh();
 					}
 				} else {
 					const result = await DataResource.Room.createRoom();
@@ -71,7 +72,7 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 		  {param.roomid ? (
 			<QuestionSidebar questions={list} roomid={param.roomid as string} />
 		  ) : (
-			<Sidebar rooms={list} />
+			<Sidebar rooms={list} handler={setList}/>
 		  )}
 		</div>
 		<div className="flex-1 flex flex-col">

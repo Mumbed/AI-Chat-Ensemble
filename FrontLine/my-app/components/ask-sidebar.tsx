@@ -21,7 +21,7 @@ export default function AskSidebar({ rooms }: SidebarProps) {
             {rooms.map((room, index) => (
               <div key={index} className="flex flex-row gap-2">
                 <Button onClick={() => router.push(`/ask/${room}`)} className="w-64">{room}</Button>
-                <Trashbutton /> {/* 이 버튼을 눌렀을때 방이 사라지는 기능이 추가*/}
+                <Trashbutton id={room} /> {/* 이 버튼을 눌렀을때 방이 사라지는 기능이 추가*/}
               </div>
             ))}
         </div>
