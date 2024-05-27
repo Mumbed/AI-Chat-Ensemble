@@ -11,7 +11,7 @@ export default function QuestionPage() {
     const param = useParams();
     const roomId = param.roomid as string;
     const [roomDatas, setRoomDatas] = useState([] as {question: string, response: {gpt: string | undefined, gemini: string | undefined}}[]);
-    let refreshSwitch = useContext(RoomContext);
+    let refreshState = useContext(RoomContext);
 
     useEffect(() => {
       const roomAsync = async () => {
@@ -24,7 +24,7 @@ export default function QuestionPage() {
           }
       };
       roomAsync();
-    }, [refreshSwitch]);
+    }, [refreshState]);
 
     return (
         <div className="flex flex-col min-h-screen p-4">
