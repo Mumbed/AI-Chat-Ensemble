@@ -143,3 +143,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+from datetime import timedelta
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': timedelta(days=7),  # 만료 시간을 7일로 설정
+}
+BASE_DIR = Path(__file__).resolve().parent.parent

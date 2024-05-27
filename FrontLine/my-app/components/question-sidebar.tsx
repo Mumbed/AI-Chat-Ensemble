@@ -2,7 +2,7 @@
 
 import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "@nextui-org/react";
-import Trashbutton from "@/components/ask-trash-button";
+import Trashbutton from "@/components/question-trash-button";
 import { useRouter } from "next/navigation";
 
 type SidebarProps = {

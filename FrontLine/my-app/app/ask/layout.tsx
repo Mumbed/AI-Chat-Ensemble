@@ -6,10 +6,13 @@ import { useEffect, useState } from 'react';
 import DataResource from '../DataResource';
 import { useParams, useRouter } from 'next/navigation';
 import QuestionSidebar from '@/components/question-sidebar';
-import AnswerBox from '@/components/ask-AnswerBox';
+import React from 'react';
+
+export const RoomContext = React.createContext(false);
 
 export default function CounterLayout({ children }: { children: React.ReactNode }) {
 	const [list, setList] = useState<string[]>([]);
+	const [refreshState, setRefreshState] = useState(false);
 	const router = useRouter();
 	const param = useParams();
   
@@ -44,7 +47,7 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 
 					else {
 						setList(result.data!.map((item: { question: string }) => item.question));
-						router.push(`/ask/${param.roomid}/${result.data!.length - 1}`);
+						setRefreshState(state => !state);
 					}
 				} else {
 					const result = await DataResource.Room.createRoom();
@@ -68,22 +71,22 @@ export default function CounterLayout({ children }: { children: React.ReactNode 
 	return (
 	  <div className="flex h-screen">
 		<div className="w-[22rem] hidden md:block">
-		  {param.roomid ? (
+		  {param.roomid ? 
 			<QuestionSidebar questions={list} roomid={param.roomid as string} />
-		  ) : (
-			<Sidebar rooms={list} />
-		  )}
+		   : 
+			<Sidebar rooms={list} stateCallback={setList} />
+		  }
 		</div>
 		<div className="flex-1 flex flex-col">
 		  <section className="flex-1 flex items-center justify-center">
 			<div className="inline-block text-center justify-center">
-			  {children}
-			  <div className="sticky bottom-0 w-full h-32">
-				<Textarea />
-			  </div>
+				<RoomContext.Provider value={refreshState}>{children}</RoomContext.Provider>
+			  	<div className="sticky bottom-0 w-full h-32">
+					<Textarea />
+			  	</div>
 			</div>
 		  </section>
 		</div>
 	  </div>
 	);
-  }
+}
