@@ -99,7 +99,7 @@ export default class DataResource {
         static deleteRoom = async (roomId: string) => {
             try {
                 await axiosInstance.delete(`/delete_chat_room/${roomId}`);
-                return { success: true, data: (await this.get(roomId)).data };
+                return { success: true, data: (await DataResource.Auth.get()).rooms };
             } catch (e) {
                 return { success: false, reason: e};
             }
@@ -112,7 +112,6 @@ export default class DataResource {
             try {
                 await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" });
                 await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" });
-                console.log(true);
                 return { success: true, data: (await this.get(roomid)).data };
             } catch (e) {
                 DataResource.Auth.get();
