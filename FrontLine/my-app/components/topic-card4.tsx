@@ -21,7 +21,7 @@ export default function Card4() {
         <CardBody 
           className="overflow-visible py-2"
         >
-        <Link href="/" passHref> {/* 링크 */}
+        <Link href="/Custom" passHref> {/* 링크 */}
         <div className="object-cover rounded-xl ">
             <Icon  />
           </div>
