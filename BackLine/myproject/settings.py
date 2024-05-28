@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,8 +144,6 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('Bearer',),
 }
-
-from datetime import timedelta
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': timedelta(days=7),  # 만료 시간을 7일로 설정
