@@ -87,10 +87,7 @@ export default class DataResource {
      * 채팅방 데이터 관련
      */
     static Room = class Room {
-        static #topic: {
-            prompt: any,
-            userSelected: string[]
-        };
+        static #topicPrompt: string;
         static createRoom = async () => {
             try {
                 const result = await axiosInstance.post("/createRoom/");
@@ -108,16 +105,16 @@ export default class DataResource {
                 return { success: false, reason: e};
             }
         }
-
         static setTopic = async (topicArray: string[]) => {
             try {
-                // const response = await axiosInstance...
-                this.#topic.userSelected = topicArray
-                ///return { success: true, data: response.data... }
-                return { success: true, data: null };
+                //this.#topicPrompt = await axiosInstance...({ topics: topicArray });
+                return { success: true, data: this.#topicPrompt };
             } catch (e) {
                 return { success: false, reason: e };
             }
+        }
+        static getPrompt = () => {
+            return this.#topicPrompt;
         }
 
         static submitQuestion = async ({ roomid, question } : {
@@ -125,8 +122,8 @@ export default class DataResource {
             question: string
         }) => {
             try {
-                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" });
-                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" });
+                await axiosInstance.post(`/chat/${roomid}/`, { question: `프롬프트:${this.#topicPrompt},질문:question`, source: "gpt" });
+                await axiosInstance.post(`/chat/${roomid}/`, { question: `프롬프트:${this.#topicPrompt},질문:question`, source: "gemini" });
                 return { success: true, data: (await this.get(roomid)).data };
             } catch (e) {
                 DataResource.Auth.get();
