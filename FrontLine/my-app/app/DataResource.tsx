@@ -87,6 +87,10 @@ export default class DataResource {
      * 채팅방 데이터 관련
      */
     static Room = class Room {
+        static #topic: {
+            prompt: any,
+            userSelected: string[]
+        };
         static createRoom = async () => {
             try {
                 const result = await axiosInstance.post("/createRoom/");
@@ -102,6 +106,17 @@ export default class DataResource {
                 return { success: true, data: (await DataResource.Auth.get()).rooms };
             } catch (e) {
                 return { success: false, reason: e};
+            }
+        }
+
+        static setTopic = async (topicArray: string[]) => {
+            try {
+                // const response = await axiosInstance...
+                this.#topic.userSelected = topicArray
+                ///return { success: true, data: response.data... }
+                return { success: true, data: null };
+            } catch (e) {
+                return { success: false, reason: e };
             }
         }
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import {Card, Skeleton, Button} from "@nextui-org/react";
 import Icon from '@/imgsrc/Custom-Complete';
 import NextLink from "next/link";
+import DataResource from '../DataResource';
 export default function HomePage() {
 	const searchParams = useSearchParams();
 	const responses = searchParams.get('responses');
