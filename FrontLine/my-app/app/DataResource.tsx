@@ -4,26 +4,10 @@ import { siteConfig } from "@/config/site";
 /**
  * @description 서버에 요청을 보내는 객체
  */
-const axiosInstance = class {
-    private static instance = axios.create({
-        baseURL: siteConfig.links.backend,
-    });
-    static get = async (url: string) => {
-        const token = localStorage.token;
-        this.instance.defaults.headers['Authorization'] = token ? `Bearer ${localStorage.token}` : null;
-        return await this.instance.get(url);
-    }
-    static post = async (url: string, data?: object) =>{
-        const token = localStorage.token;
-        this.instance.defaults.headers['Authorization'] = token ? `Bearer ${localStorage.token}` : null;
-        return await this.instance.post(url, data);
-    }
-    static delete = async (url: string) => {
-        const token = localStorage.token;
-        this.instance.defaults.headers['Authorization'] = token ? `Bearer ${localStorage.token}` : null;
-        return await this.instance.delete(url);
-    }
-}
+const axiosInstance = axios.create({
+    baseURL: siteConfig.links.backend,
+});
+
 /**
  * @description 데이터를 그대로 복사해서 넘겨주는 함수
  */
@@ -51,7 +35,7 @@ export default class DataResource {
          */
         static login = async (email: string, password: string) => {
             try {
-                localStorage.removeItem("token");
+                axiosInstance.defaults.headers['Authorization'] = null
                 const data = await axiosInstance.post("/login/", { email, password });
                 localStorage.setItem("token", data.data.tokens.access);
                 return { success: true };
@@ -65,7 +49,7 @@ export default class DataResource {
          */
         static regist = async (name: string, email: string, password: string, verify: string) => {
             try {
-                localStorage.removeItem("token");
+                axiosInstance.defaults.headers['Authorization'] = null;
                 const data = await axiosInstance.post('/register/', { name, email, password, verify });
                 localStorage.setItem("token", data.data.tokens.access);
                 return { success: true };
@@ -79,6 +63,7 @@ export default class DataResource {
          */
         static get = async () => {
             if (localStorage.token == "") return this.buffer;
+            axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
             try {
                 const [auth, rooms] = await Promise.all([
                     axiosInstance.get("/get_user_info"),
@@ -105,6 +90,7 @@ export default class DataResource {
     static Room = class Room {
         static createRoom = async () => {
             try {
+                axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
                 const result = await axiosInstance.post("/createRoom/");
                 return { success: true, roomid: result.data.chat_room_id, allRooms: (await DataResource.Auth.get()).rooms }
             } catch (e) {
@@ -130,6 +116,7 @@ export default class DataResource {
             }
         }) => {
             try {
+                axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
                 if (preferences) {
                     await axiosInstance.post(`/chat/${roomid}/`, { preferences, source: "gpt" });
                     await axiosInstance.post(`/chat/${roomid}/`, { preferences, source: "gemini" });
