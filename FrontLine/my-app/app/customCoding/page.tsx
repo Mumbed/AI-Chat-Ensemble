@@ -63,7 +63,10 @@ export default function BlogPage() {
 		else {
 			await DataResource.Room.submitQuestion({
 				roomid: result.roomid as string,
-				preferences: responses as string[]
+				preferences: {
+					majorTopic: "coding",
+					details: responses
+				}
 			})
 			router.push(`/ask/${result.roomid}`);
 		}

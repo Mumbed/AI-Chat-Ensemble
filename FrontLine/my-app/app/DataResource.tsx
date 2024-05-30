@@ -119,7 +119,10 @@ export default class DataResource {
         static submitQuestion = async ({ roomid, question, preferences } : {
             roomid: string,
             question?: string,
-            preferences?: string[]
+            preferences?: {
+                majorTopic: string,
+                details: string[]
+            }
         }) => {
             try {
                 if (preferences) {
