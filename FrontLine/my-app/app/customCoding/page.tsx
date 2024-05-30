@@ -5,8 +5,10 @@ import { Divider, Button, Input, Progress } from "@nextui-org/react";
 import Image from "next/image";
 import Ai from '@/imgsrc/custom-Ai.gif';
 import Link from 'next/link'; // Link 컴포넌트를 가져옵니다
+import DataResource from "../DataResource";
 
 export default function BlogPage() {
+	const router = useRouter();
 	const questions = [
 		"당신은 어떤 사람인가요?",
 		"당신이 궁금한 언어는 무엇입니까?",
@@ -54,6 +56,18 @@ export default function BlogPage() {
 		setInputValue(""); // 입력 필드 초기화
 		handleNextQuestion();
 	};
+	const createRoomWithPreferences = async () => {
+		const result = await DataResource.Room.createRoom();
+		if (!result.success) router.push("/login");
+
+		else {
+			await DataResource.Room.submitQuestion({
+				roomid: result.roomid as string,
+				preferences: responses as string[]
+			})
+			router.push(`/ask/${result.roomid}`);
+		}
+	}
 		// 진행도 계산
 		const progress = ((questionIndex + 1) / questions.length) * 100;
 
@@ -93,14 +107,9 @@ export default function BlogPage() {
 						/>
 					</>
 				) : (
-					<Link href={{
-						pathname: '/blog',
-						query: { responses: JSON.stringify(responses) }
-					}}>
-						<Button color="primary" className = "mt-10">
-							작성완료! 질문하기로 이동
-						</Button>
-					</Link>
+					<Button color="primary" className = "mt-10" onClick={createRoomWithPreferences}>
+						작성완료! 질문하기로 이동
+					</Button>
 				)}
 			</div>
 		</div>
