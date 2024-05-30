@@ -5,6 +5,7 @@ import { Divider, Button, Input, Progress } from "@nextui-org/react";
 import Image from "next/image";
 import Ai from '@/imgsrc/custom-Ai.gif';
 import Link from 'next/link'; // Link 컴포넌트를 가져옵니다
+import DataResource from "../DataResource";
 
 export default function CostomLan() {
 	const questions = [
