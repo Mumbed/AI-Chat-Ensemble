@@ -87,7 +87,7 @@ export default function BlogPage() {
 		<div>
 			<h1 className="text-3xl font-bold mb-10">프롬프트를 제작하기 위해 <br></br>간단한 질문을 체크해주세요</h1>
 			<Progress aria-label="진행도" value={progress} className=""/>
-			<h2>이곳에 출력: {responses.join(", ")}</h2> {/* 응답 출력 */}
+			{/* <h2>이곳에 출력: {responses.join(", ")}</h2> 응답 출력 */}
 			<Divider />
 			<div className="mt-10 flex justify-center">
 				<div className="bg-white p-6 rounded-lg shadow-lg">
@@ -118,9 +118,12 @@ export default function BlogPage() {
 						/>
 					</>
 				) : (
-					<Button color="primary" className = "mt-10" onClick={createRoomWithPreferences}>
-						작성완료! 질문하기로 이동
-					</Button>
+					<div className = "m-10 w-[42rem]">
+						<span className = "text-xl font-bold">다음 이동되는 채팅방은 프롬프트가 적용된 채팅방입니다.</span>
+						<Button color="primary" className = "mt-10" onClick={createRoomWithPreferences}>
+							작성완료! 질문하기로 이동
+						</Button>
+					</div>
 				)}
 			</div>
 		</div>
