@@ -19,6 +19,7 @@ export default function CostomLan() {
 		["문서작성", "회화", "학습"]
 	];
 
+	let lock = false;
 	const [questionIndex, setQuestionIndex] = useState(0);
 	const [selectedText, setSelectedText] = useState("");
 	const [sequenceIndex, setSequenceIndex] = useState(0);
@@ -54,6 +55,28 @@ export default function CostomLan() {
 		setInputValue(""); // 입력 필드 초기화
 		handleNextQuestion();
 	};
+	const createRoomWithPreferences = async () => {
+		if (lock) console.log("이미 처리중입니다.");
+		else {
+			lock = true;
+			const result = await DataResource.Room.createRoom();
+			if (!result.success) router.push("/login");
+			
+			else {
+				await DataResource.Room.submitQuestion({
+					roomid: result.roomid as string,
+					preferences: {
+						majorTopic: "Language",
+						details: {
+							language: responses[0]
+						}
+					}
+				})
+				router.push(`/ask/${result.roomid}`);
+			}
+			lock = false;
+		}
+	}
 		// 진행도 계산
 		const progress = ((questionIndex + 1) / questions.length) * 100;
 
