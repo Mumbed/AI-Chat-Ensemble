@@ -18,7 +18,7 @@ export default function CounterPage() {
 					const form = e.target as HTMLFormElement;
 					const email = (form[0] as HTMLInputElement).value;
 					const password = (form[1] as HTMLInputElement).value;
-					if ((await DataResource.Auth.login(email, password)).success) router.push('/ask');
+					if ((await DataResource.Auth.login(email, password)).success) router.push('/askBefore');
 				};
 			}
         };
