@@ -9,15 +9,18 @@ const axiosInstance = class {
         baseURL: siteConfig.links.backend,
     });
     static get = async (url: string) => {
-        this.instance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
+        const token = localStorage.token;
+        this.instance.defaults.headers['Authorization'] = token ? `Bearer ${localStorage.token}` : null;
         return await this.instance.get(url);
     }
     static post = async (url: string, data?: object) =>{
-        this.instance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
+        const token = localStorage.token;
+        this.instance.defaults.headers['Authorization'] = token ? `Bearer ${localStorage.token}` : null;
         return await this.instance.post(url, data);
     }
     static delete = async (url: string) => {
-        this.instance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
+        const token = localStorage.token;
+        this.instance.defaults.headers['Authorization'] = token ? `Bearer ${localStorage.token}` : null;
         return await this.instance.delete(url);
     }
 }
@@ -48,6 +51,7 @@ export default class DataResource {
          */
         static login = async (email: string, password: string) => {
             try {
+                localStorage.removeItem("token");
                 const data = await axiosInstance.post("/login/", { email, password });
                 localStorage.setItem("token", data.data.tokens.access);
                 return { success: true };
@@ -61,6 +65,7 @@ export default class DataResource {
          */
         static regist = async (name: string, email: string, password: string, verify: string) => {
             try {
+                localStorage.removeItem("token");
                 const data = await axiosInstance.post('/register/', { name, email, password, verify });
                 localStorage.setItem("token", data.data.tokens.access);
                 return { success: true };
