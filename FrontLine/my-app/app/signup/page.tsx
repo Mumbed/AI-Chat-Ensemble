@@ -23,7 +23,7 @@ export default function SignupPage() {
 					const email = (form[1] as HTMLInputElement).value;
 					const password = (form[2] as HTMLInputElement).value;
 					const passwordVerify = (form[4] as HTMLInputElement).value;
-					if ((await DataResource.Auth.regist(name, email, password, passwordVerify)).success) router.push('/ask');
+					if ((await DataResource.Auth.regist(name, email, password, passwordVerify)).success) router.push('/askBefore');
 				};
 			}
         };
