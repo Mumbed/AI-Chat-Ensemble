@@ -89,6 +89,7 @@ export default class DataResource {
      */
     static Room = class Room {
         static createRoom = async () => {
+            axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
             try {
                 const result = await axiosInstance.post("/createRoom/");
                 return { success: true, roomid: result.data.chat_room_id, allRooms: (await DataResource.Auth.get()).rooms }

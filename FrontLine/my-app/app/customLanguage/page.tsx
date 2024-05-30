@@ -8,6 +8,7 @@ import Link from 'next/link'; // Link 컴포넌트를 가져옵니다
 import DataResource from "../DataResource";
 
 export default function CostomLan() {
+	const router = useRouter();
 	const questions = [
 		"어떤언어에 대해서 질문하시겠습니까?",
 		"당신이 궁금한 내용은 무엇입니까?",

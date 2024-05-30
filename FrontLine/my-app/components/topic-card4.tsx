@@ -22,7 +22,7 @@ export default function Card4() {
           className="overflow-visible py-2"
         >
         <NextLink href="/Custom" passHref> {/* 링크 */}
-        <div className="object-cover rounded-xl ">
+          <div className="object-cover rounded-xl ">
             <Icon  />
           </div>
           </NextLink>
