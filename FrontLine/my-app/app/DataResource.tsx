@@ -62,7 +62,7 @@ export default class DataResource {
          * @description 현재 사용자 정보를 불러오는 함수
          */
         static get = async () => {
-            if (localStorage.token == "") return this.buffer;
+            if (!localStorage.token) return this.buffer;
             axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
             try {
                 const [auth, rooms] = await Promise.all([
@@ -90,7 +90,6 @@ export default class DataResource {
     static Room = class Room {
         static createRoom = async () => {
             try {
-                axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
                 const result = await axiosInstance.post("/createRoom/");
                 return { success: true, roomid: result.data.chat_room_id, allRooms: (await DataResource.Auth.get()).rooms }
             } catch (e) {

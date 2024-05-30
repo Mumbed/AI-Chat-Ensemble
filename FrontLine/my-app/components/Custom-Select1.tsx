@@ -2,7 +2,7 @@
 import React from "react";
 import { Select, SelectItem } from "@nextui-org/react";
 import { topics } from "@/imgsrc/Custom-Select1-data";
-import Link from "next/link";
+import NextLink from "next/link";
 import { Button } from "@nextui-org/react";
 
 export default function CustomSelect1() {
@@ -40,11 +40,11 @@ export default function CustomSelect1() {
         </Select>
       </div>
       <div className = "mr-28">
-        <Link href={href}>
+        <NextLink href={href}>
           <Button color="primary" className="max-w-xs w-full">
             계속하기
           </Button>
-        </Link>
+        </NextLink>
       </div>
 
     </div>

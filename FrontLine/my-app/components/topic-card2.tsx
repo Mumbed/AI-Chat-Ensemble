@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import Image from "next/image";
 import SkipButtonGif from '@/imgsrc/SkipButton.gif';
-import Link from "next/link";
+import NextLink from "next/link";
 
 const TransparentImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgAB/1l7nV8AAAAASUVORK5CYII=";
 
@@ -12,7 +12,7 @@ export default function Card2() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link href="/ask" passHref>
+    <NextLink href="/ask" passHref>
       <Card className="py-4 p-4">
         <CardHeader className="pb-0 pt-2 px-4 flex-col items-start ">
           <small className="text-default-500">바로 질문하고 싶으신가요?</small>
@@ -32,6 +32,6 @@ export default function Card2() {
           />
         </CardBody>
       </Card>
-    </Link>
+    </NextLink>
   );
 }

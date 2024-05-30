@@ -3,7 +3,6 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter,Button, Tooltip, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import Image from "next/image";
-import Link from "next/link";
 import StarIcon from '@/imgsrc/StarIcon';
 import RandomIcon from '@/imgsrc/RandomIcon';
 

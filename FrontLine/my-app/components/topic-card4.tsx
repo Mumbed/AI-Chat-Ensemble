@@ -3,7 +3,7 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter,Button, Tooltip } from "@nextui-org/react";
 import Image from "next/image";
-import Link from "next/link";
+import NextLink from "next/link";
 import StarIcon from '@/imgsrc/StarIcon';
 import Icon from '@/imgsrc/CustomIcon';
 export default function Card4() {
@@ -21,11 +21,11 @@ export default function Card4() {
         <CardBody 
           className="overflow-visible py-2"
         >
-        <Link href="/Custom" passHref> {/* 링크 */}
+        <NextLink href="/Custom" passHref> {/* 링크 */}
         <div className="object-cover rounded-xl ">
             <Icon  />
           </div>
-          </Link>
+          </NextLink>
         </CardBody>
       </Card>
     
