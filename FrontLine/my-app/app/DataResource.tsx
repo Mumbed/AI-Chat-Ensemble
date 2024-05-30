@@ -4,9 +4,23 @@ import { siteConfig } from "@/config/site";
 /**
  * @description 서버에 요청을 보내는 객체
  */
-const axiosInstance = axios.create({
-    baseURL: siteConfig.links.backend,
-});
+const axiosInstance = class {
+    private static instance = axios.create({
+        baseURL: siteConfig.links.backend,
+    });
+    static get = async (url: string) => {
+        this.instance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
+        return await this.instance.get(url);
+    }
+    static post = async (url: string, data?: object) =>{
+        this.instance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
+        return await this.instance.post(url, data);
+    }
+    static delete = async (url: string) => {
+        this.instance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
+        return await this.instance.delete(url);
+    }
+}
 /**
  * @description 데이터를 그대로 복사해서 넘겨주는 함수
  */
@@ -34,7 +48,6 @@ export default class DataResource {
          */
         static login = async (email: string, password: string) => {
             try {
-                axiosInstance.defaults.headers['Authorization'] = null;
                 const data = await axiosInstance.post("/login/", { email, password });
                 localStorage.setItem("token", data.data.tokens.access);
                 return { success: true };
@@ -48,7 +61,6 @@ export default class DataResource {
          */
         static regist = async (name: string, email: string, password: string, verify: string) => {
             try {
-                axiosInstance.defaults.headers['Authorization'] = null;
                 const data = await axiosInstance.post('/register/', { name, email, password, verify });
                 localStorage.setItem("token", data.data.tokens.access);
                 return { success: true };
@@ -62,7 +74,6 @@ export default class DataResource {
          */
         static get = async () => {
             if (localStorage.token == "") return this.buffer;
-            axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
             try {
                 const [auth, rooms] = await Promise.all([
                     axiosInstance.get("/get_user_info"),
@@ -87,7 +98,6 @@ export default class DataResource {
      * 채팅방 데이터 관련
      */
     static Room = class Room {
-        static #topicPrompt: string;
         static createRoom = async () => {
             try {
                 const result = await axiosInstance.post("/createRoom/");
@@ -105,27 +115,26 @@ export default class DataResource {
                 return { success: false, reason: e};
             }
         }
-        static setTopic = async (topicArray: string[]) => {
-            try {
-                //this.#topicPrompt = await axiosInstance...({ topics: topicArray });
-                return { success: true, data: this.#topicPrompt };
-            } catch (e) {
-                return { success: false, reason: e };
-            }
-        }
-        static getPrompt = () => {
-            return this.#topicPrompt;
-        }
 
-        static submitQuestion = async ({ roomid, question } : {
+        static submitQuestion = async ({ roomid, question, preferences } : {
             roomid: string,
-            question: string
+            question?: string,
+            preferences?: {
+                majorTopic: string,
+                details: object
+            }
         }) => {
             try {
-                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" });
-                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" });
+                if (preferences) {
+                    await axiosInstance.post(`/chat/${roomid}/`, { preferences, source: "gpt" });
+                    await axiosInstance.post(`/chat/${roomid}/`, { preferences, source: "gemini" });
+                } else {
+                    await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" });
+                    await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" });
+                }
                 return { success: true, data: (await this.get(roomid)).data };
             } catch (e) {
+                console.log(e);
                 DataResource.Auth.get();
                 return { success: false, reason: e };
             }
