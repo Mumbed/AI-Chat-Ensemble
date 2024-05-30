@@ -115,15 +115,10 @@ export default function CostomLan() {
 							}
 						/>
 					</>
-				) : (
-					<Link href={{
-						pathname: '/blog',
-						query: { responses: JSON.stringify(responses) }
-					}}>
-						<Button color="primary" className = "mt-10">
-							작성완료! 질문하기로 이동
-						</Button>
-					</Link>
+				) : 
+					<Button color="primary" className = "mt-10" onClick={createRoomWithPreferences}>
+					    작성완료! 질문하기로 이동
+				        </Button>
 				)}
 			</div>
 		</div>
