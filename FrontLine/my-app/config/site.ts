@@ -9,16 +9,8 @@ export const siteConfig = {
 			href: "/",
 		},
     {
-      label: "Test",
-      href: "/askBefore",
-    },
-    {
       label: "Ask",
       href: "/askBefore",
-    },
-    {
-      label: "About",
-      href: "/about",
     }
 	],
 	navMenuItems: [
