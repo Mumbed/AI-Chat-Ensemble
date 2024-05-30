@@ -116,7 +116,6 @@ export default class DataResource {
             }
         }) => {
             try {
-                axiosInstance.defaults.headers['Authorization'] = `Bearer ${localStorage.token}`;
                 if (preferences) {
                     await axiosInstance.post(`/chat/${roomid}/`, { preferences, source: "gpt" });
                     await axiosInstance.post(`/chat/${roomid}/`, { preferences, source: "gemini" });
