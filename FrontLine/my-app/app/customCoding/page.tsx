@@ -20,6 +20,7 @@ export default function BlogPage() {
 		["Java", "C언어", "Python"],
 		["문법", "코드수정", "코드작성"]
 	];
+	let lock = false;
 
 	const [questionIndex, setQuestionIndex] = useState(0);
 	const [selectedText, setSelectedText] = useState("");
@@ -57,18 +58,25 @@ export default function BlogPage() {
 		handleNextQuestion();
 	};
 	const createRoomWithPreferences = async () => {
-		const result = await DataResource.Room.createRoom();
-		if (!result.success) router.push("/login");
-
+		if (lock) console.log("이미 처리중입니다.");
 		else {
-			await DataResource.Room.submitQuestion({
-				roomid: result.roomid as string,
-				preferences: {
-					majorTopic: "coding",
-					details: responses
-				}
-			})
-			router.push(`/ask/${result.roomid}`);
+			lock = true;
+			const result = await DataResource.Room.createRoom();
+			if (!result.success) router.push("/login");
+			
+			else {
+				await DataResource.Room.submitQuestion({
+					roomid: result.roomid as string,
+					preferences: {
+						majorTopic: "Coding",
+						details: {
+							language: responses[1]
+						}
+					}
+				})
+				router.push(`/ask/${result.roomid}`);
+			}
+			lock = false;
 		}
 	}
 		// 진행도 계산

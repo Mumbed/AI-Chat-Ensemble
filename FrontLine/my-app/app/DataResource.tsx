@@ -121,7 +121,7 @@ export default class DataResource {
             question?: string,
             preferences?: {
                 majorTopic: string,
-                details: string[]
+                details: object
             }
         }) => {
             try {
