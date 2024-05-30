@@ -118,7 +118,7 @@ export default function CostomLan() {
 						/>
 					</>
 				) : (
-			                <Button color="primary" className = "mt-10" onClick={createRoomWithPreferences}>
+			        <Button color="primary" className = "mt-10" onClick={createRoomWithPreferences}>
 						작성완료! 질문하기로 이동
 					</Button>
 				)}
