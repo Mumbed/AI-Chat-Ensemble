@@ -122,8 +122,8 @@ export default class DataResource {
             question: string
         }) => {
             try {
-                await axiosInstance.post(`/chat/${roomid}/`, { question: `프롬프트:${this.#topicPrompt},질문:question`, source: "gpt" });
-                await axiosInstance.post(`/chat/${roomid}/`, { question: `프롬프트:${this.#topicPrompt},질문:question`, source: "gemini" });
+                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gpt" });
+                await axiosInstance.post(`/chat/${roomid}/`, { question, source: "gemini" });
                 return { success: true, data: (await this.get(roomid)).data };
             } catch (e) {
                 DataResource.Auth.get();
