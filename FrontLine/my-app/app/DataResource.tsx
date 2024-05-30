@@ -131,6 +131,7 @@ export default class DataResource {
                 }
                 return { success: true, data: (await this.get(roomid)).data };
             } catch (e) {
+                console.log(e);
                 DataResource.Auth.get();
                 return { success: false, reason: e };
             }
