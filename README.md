@@ -16,6 +16,9 @@
 
 ### - 주요 적용 기술 및 구조
 
+![2  50조_이미지_주요 적용 기술 및 구조](https://github.com/Mumbed/AI-Chat-Ensemble/assets/115711955/a1f56591-dffd-4912-b933-77b5523eee4d)
+
+
   **개발 도구 : PyCharm, Visual Studio Code, IntelliJ**
 
   **개발 언어 : Python, Java Script, React**
@@ -26,7 +29,8 @@
 
 ### - 작품 소개 사진
 
- 
+ ![3  50조_이미지_작품 소개 사진](https://github.com/Mumbed/AI-Chat-Ensemble/assets/115711955/3b9dba00-e4a2-44e5-b97a-dfed673a8b31)
+
 
 ### - 기대효과
 
